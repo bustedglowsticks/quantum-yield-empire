@@ -1,3 +1,4 @@
+// ... existing code ...
 services:
   - type: web
     name: quantum-yield-empire
@@ -29,4 +30,21 @@ services:
     autoDeploy: true
     plan: starter
     region: oregon
-    branch: master 
+    branch: master
+
+// {{ Adding mainnet bot worker service }}
+  - type: worker
+    name: quantum-mainnet-bot
+    runtime: node
+    buildCommand: npm install
+    startCommand: node beast-mode-network-launcher.js mainnet
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: snBKqGcCxFiRodnGcJKP6xm3fMY
+        sync: false  # Set this securely in Render dashboard
+    autoDeploy: true
+    plan: starter
+    region: oregon
+    branch: master
+// ... existing code ...
