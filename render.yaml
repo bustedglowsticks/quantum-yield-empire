@@ -44,4 +44,4 @@ services:
     autoDeploy: true
     plan: starter
     region: oregon
-    branch: master 
+    branch: master
