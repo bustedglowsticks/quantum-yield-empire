@@ -213,14 +213,13 @@ class BeastModeNetworkLauncher {
 async function main() {
   const launcher = new BeastModeNetworkLauncher();
   
-  // Get command line arguments
-  const args = process.argv.slice(2);
-  const network = args[0] || 'testnet';
-  const walletSeed = args[1] || null;
+  // Get from environment for cloud deployment
+  const network = process.env.NETWORK || 'mainnet';  // Default to mainnet for this worker
+  const walletSeed = process.env.WALLET_SEED || null;
   
   console.log(`🚀 BEAST MODE NETWORK LAUNCHER STARTING...`);
   console.log(`🌐 Network: ${network}`);
-  console.log(`💰 Wallet: ${walletSeed ? 'Using provided seed' : 'Creating new wallet'}`);
+  console.log(`💰 Wallet: ${walletSeed ? 'Using environment seed' : 'Creating new wallet (WARNING: For test only!)'}`);
   
   try {
     const result = await launcher.start(network, walletSeed);
@@ -238,7 +237,8 @@ async function main() {
     
   } catch (error) {
     console.error('❌ BEAST MODE NETWORK LAUNCHER FAILED:', error.message);
-    process.exit(1);
+    // Don't exit - retry or keep running
+    setTimeout(() => main(), 5000);  // Retry every 5s on failure
   }
 }
 
