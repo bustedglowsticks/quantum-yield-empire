@@ -13,7 +13,7 @@ services:
     autoDeploy: true
     plan: starter
     region: oregon
-    branch: main
+    branch: master
 
   - type: web
     name: quantum-dashboard
@@ -29,4 +29,4 @@ services:
     autoDeploy: true
     plan: starter
     region: oregon
-    branch: main 
+    branch: master 
