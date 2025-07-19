@@ -1,34 +1,13 @@
-{
-  "name": "xrpl-liquidity-bot",
-  "version": "1.0.0",
-  "description": "Liquidity provider bot for the XRP Ledger",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "test": "jest",
-    "validate": "node src/test/live-validation-arena-orchestrator.js"
-  },
-  "keywords": [
-    "xrpl",
-    "liquidity",
-    "bot",
-    "amm",
-    "dex"
-  ],
-  "author": "",
-  "license": "MIT",
+// ... existing code ...
   "dependencies": {
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "html2canvas": "^1.4.1",
     "redis": "^4.2.0",
-    "@tensorflow/tfjs": "^3.18.0",
+    "@tensorflow/tfjs-node": "^3.18.0",  // Changed to Node.js version for server-side AI
     "uuid": "^8.3.2",
     "ws": "^8.8.0",
     "xrpl": "^2.7.0"
   },
-  "devDependencies": {
-    "jest": "^28.1.3"
-  }
-}
+// ... existing code ...
