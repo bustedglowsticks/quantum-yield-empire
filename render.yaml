@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: quantum-yield-empire
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+    healthCheckPath: /api/status
+    autoDeploy: true
+    plan: starter
+    region: oregon
+    branch: main
+
+  - type: web
+    name: quantum-dashboard
+    runtime: node
+    buildCommand: npm install
+    startCommand: node simple-testnet-dashboard.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10001
+    healthCheckPath: /api/status
+    autoDeploy: true
+    plan: starter
+    region: oregon
+    branch: main 
