@@ -5,7 +5,7 @@ const fs = require('fs');
 class ProfessionalWebsite {
     constructor() {
         this.app = express();
-        this.port = 3003;
+        this.port = process.env.PORT || 3003;
         this.subscriptionTiers = {
             starter: {
                 name: 'Starter',
