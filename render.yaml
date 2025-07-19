@@ -3,13 +3,13 @@ services:
     name: quantum-yield-empire
     runtime: node
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: node professional-website/server.js
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
-    healthCheckPath: /api/status
+    healthCheckPath: /
     autoDeploy: true
     plan: starter
     region: oregon
@@ -25,7 +25,7 @@ services:
         value: production
       - key: PORT
         value: 10001
-    healthCheckPath: /api/status
+    healthCheckPath: /
     autoDeploy: true
     plan: starter
     region: oregon
