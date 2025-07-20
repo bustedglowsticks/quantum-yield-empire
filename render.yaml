@@ -1,65 +1,76 @@
 services:
+  # Main Quantum Yield Empire - Production Version
   - type: web
     name: quantum-yield-empire
-    runtime: node
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: node quantum-empire-production.js
+    envVars:
+      - key: NETWORK
+        value: mainnet
+      - key: NODE_ENV
+        value: production
+      - key: WALLET_SEED
+        sync: false  # Set this in Render dashboard for security
+    healthCheckPath: /health
+
+  # Professional Website & Dashboard
+  - type: web
+    name: quantum-professional-website
+    env: node
+    plan: starter
     buildCommand: npm install
     startCommand: node professional-website/server.js
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10000
-    healthCheckPath: /
-    autoDeploy: true
-    plan: starter
-    region: oregon
-    branch: master
+        value: 3001
 
+  # Testnet Dashboard for Development
   - type: web
-    name: quantum-dashboard
-    runtime: node
+    name: quantum-testnet-dashboard
+    env: node
+    plan: starter
     buildCommand: npm install
     startCommand: node simple-testnet-dashboard.js
     envVars:
+      - key: NETWORK
+        value: testnet
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10001
-    healthCheckPath: /
-    autoDeploy: true
-    plan: starter
-    region: oregon
-    branch: master
+        value: 3002
 
-  - type: worker
-    name: quantum-mainnet-bot
-    runtime: node
-    buildCommand: npm install
-    startCommand: node beast-mode-network-launcher.js
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: NETWORK
-        value: mainnet
-      - key: WALLET_SEED
-        sync: false  # Set this securely in Render dashboard
-    autoDeploy: true
-    plan: starter
-    region: oregon
-    branch: master
-
+  # Mainnet Performance Dashboard
   - type: web
     name: quantum-mainnet-dashboard
-    runtime: node
+    env: node
+    plan: starter
     buildCommand: npm install
     startCommand: node mainnet-dashboard.js
     envVars:
+      - key: NETWORK
+        value: mainnet
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 10002
-    healthCheckPath: /
-    autoDeploy: true
+        value: 3003
+      - key: WALLET_SEED
+        sync: false  # Set this in Render dashboard for security
+
+  # Background Worker for Beast Mode Bot
+  - type: worker
+    name: quantum-beast-mode-worker
+    env: node
     plan: starter
-    region: oregon
-    branch: master
+    buildCommand: npm install
+    startCommand: node beast-mode-network-launcher.js mainnet
+    envVars:
+      - key: NETWORK
+        value: mainnet
+      - key: NODE_ENV
+        value: production
+      - key: WALLET_SEED
+        sync: false  # Set this in Render dashboard for security

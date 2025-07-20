@@ -1,4 +1,6 @@
-const xrpl = require('xrpl');
+const { Client, Wallet } = require('xrpl');
+
+console.log('🌐 QUANTUM NETWORK CONNECTOR - XRPL INTEGRATION! 🌐');
 
 class NetworkConnector {
   constructor() {
@@ -10,237 +12,211 @@ class NetworkConnector {
     this.maxRetries = 5;
   }
 
-  // Network configurations
-  getNetworks() {
-    return {
-      testnet: {
-        name: 'XRPL Testnet',
-        server: 'wss://s.altnet.rippletest.net:51233',
-        faucet: 'https://faucet.altnet.rippletest.net/accounts',
-        description: 'Test environment with free XRP'
-      },
-      mainnet: {
-        name: 'XRPL Mainnet',
-        server: 'wss://s1.ripple.com',
-        faucet: null,
-        description: 'Production network with real XRP'
-      },
-      devnet: {
-        name: 'XRPL Devnet',
-        server: 'wss://s.devnet.rippletest.net:51233',
-        faucet: 'https://faucet.devnet.rippletest.net/accounts',
-        description: 'Development environment'
-      },
-      hooks: {
-        name: 'XRPL Hooks Testnet',
-        server: 'wss://hooks-testnet-v3.xrpl-labs.com',
-        faucet: 'https://hooks-testnet-v3.xrpl-labs.com/faucet',
-        description: 'Hooks-enabled testnet'
-      }
-    };
-  }
-
   async connect(networkName = 'testnet', walletSeed = null) {
-    const networks = this.getNetworks();
-    const network = networks[networkName];
+    console.log(`🌐 NETWORK CONNECTOR: Connecting to ${networkName}...`);
     
-    if (!network) {
-      throw new Error(`Unknown network: ${networkName}. Available: ${Object.keys(networks).join(', ')}`);
-    }
-
-    console.log(`🌐 BEAST MODE: Connecting to ${network.name}...`);
-    console.log(`   Server: ${network.server}`);
-    console.log(`   Description: ${network.description}`);
-
     try {
-      // Create client
-      this.client = new xrpl.Client(network.server);
+      // Determine server URL based on network
+      const serverUrl = this.getServerUrl(networkName);
       
-      // Connect with timeout
-      await Promise.race([
-        this.client.connect(),
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Connection timeout')), 30000)
-        )
-      ]);
-
+      // Create XRPL client
+      this.client = new Client(serverUrl);
+      
+      // Connect to the network
+      await this.client.connect();
       this.isConnected = true;
       this.currentNetwork = networkName;
-      this.connectionAttempts = 0;
-
-      console.log(`✅ BEAST MODE: Successfully connected to ${network.name}!`);
-
-      // Setup wallet
-      if (walletSeed) {
-        await this.setupWallet(walletSeed);
-      } else {
-        await this.createWallet();
-      }
-
-      // Setup event listeners
-      this.setupEventListeners();
-
+      
+      console.log(`✅ NETWORK CONNECTOR: Connected to ${networkName}!`);
+      
+      // Initialize wallet
+      await this.initializeWallet(walletSeed);
+      
       return {
         success: true,
         network: networkName,
-        server: network.server,
-        wallet: this.wallet ? this.wallet.address : null
+        wallet: this.wallet.address,
+        serverUrl: serverUrl
       };
-
+      
     } catch (error) {
+      console.error(`❌ NETWORK CONNECTOR: Connection to ${networkName} failed:`, error.message);
+      
       this.connectionAttempts++;
-      console.error(`❌ BEAST MODE: Connection failed to ${network.name}:`, error.message);
-      
       if (this.connectionAttempts < this.maxRetries) {
-        console.log(`🔄 BEAST MODE: Retrying connection (${this.connectionAttempts}/${this.maxRetries})...`);
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        console.log(`🔄 NETWORK CONNECTOR: Retrying connection (${this.connectionAttempts}/${this.maxRetries})...`);
+        await this.delay(2000); // Wait 2 seconds before retry
         return this.connect(networkName, walletSeed);
-      } else {
-        throw new Error(`Failed to connect to ${network.name} after ${this.maxRetries} attempts`);
       }
-    }
-  }
-
-  async setupWallet(seed) {
-    try {
-      this.wallet = xrpl.Wallet.fromSeed(seed);
-      console.log(`💰 BEAST MODE: Wallet loaded - ${this.wallet.address}`);
       
-      // Check balance
-      const balance = await this.getBalance();
-      console.log(`💰 BEAST MODE: Current balance: ${balance} XRP`);
-      
-      return this.wallet;
-    } catch (error) {
-      console.error('❌ BEAST MODE: Wallet setup failed:', error.message);
       throw error;
     }
   }
 
-  async createWallet() {
+  getServerUrl(networkName) {
+    const servers = {
+      'mainnet': 'wss://xrplcluster.com',
+      'testnet': 'wss://s.altnet.rippletest.net:51233',
+      'devnet': 'wss://s.devnet.rippletest.net:51233'
+    };
+    
+    return servers[networkName] || servers['testnet'];
+  }
+
+  async initializeWallet(walletSeed = null) {
     try {
-      this.wallet = xrpl.Wallet.generate();
-      console.log(`💰 BEAST MODE: New wallet created - ${this.wallet.address}`);
-      console.log(`🔑 BEAST MODE: Seed: ${this.wallet.seed}`);
-      
-      // Fund wallet if on testnet
-      if (this.currentNetwork === 'testnet' || this.currentNetwork === 'devnet') {
-        await this.fundWallet();
+      if (walletSeed) {
+        console.log('🔑 NETWORK CONNECTOR: Using provided wallet seed...');
+        this.wallet = Wallet.fromSeed(walletSeed);
+      } else {
+        console.log('🔑 NETWORK CONNECTOR: Generating new wallet...');
+        this.wallet = Wallet.generate();
+        
+        // For testnet, fund the wallet
+        if (this.currentNetwork === 'testnet') {
+          await this.fundTestnetWallet();
+        }
       }
       
-      return this.wallet;
+      console.log(`✅ NETWORK CONNECTOR: Wallet initialized: ${this.wallet.address}`);
+      
     } catch (error) {
-      console.error('❌ BEAST MODE: Wallet creation failed:', error.message);
+      console.error('❌ NETWORK CONNECTOR: Wallet initialization failed:', error.message);
       throw error;
     }
   }
 
-  async fundWallet() {
-    if (!this.wallet) {
-      throw new Error('No wallet available');
-    }
-
+  async fundTestnetWallet() {
     try {
-      console.log(`💰 BEAST MODE: Funding wallet from faucet...`);
+      console.log('💰 NETWORK CONNECTOR: Funding testnet wallet...');
       
-      const response = await fetch('https://faucet.altnet.rippletest.net/accounts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          destination: this.wallet.address
-        })
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log(`✅ BEAST MODE: Wallet funded with ${result.amount} XRP`);
-        
-        // Wait for funding to be available
-        await new Promise(resolve => setTimeout(resolve, 10000));
-        
-        const balance = await this.getBalance();
-        console.log(`💰 BEAST MODE: New balance: ${balance} XRP`);
-      } else {
-        console.log(`⚠️ BEAST MODE: Faucet funding failed, but continuing...`);
+      // Use XRPL testnet faucet
+      const fundResult = await this.client.fundWallet(this.wallet);
+      
+      if (fundResult) {
+        console.log('✅ NETWORK CONNECTOR: Testnet wallet funded successfully!');
+        console.log(`💰 Balance: ${await this.getBalance()} XRP`);
       }
+      
     } catch (error) {
-      console.log(`⚠️ BEAST MODE: Faucet funding failed: ${error.message}`);
+      console.warn('⚠️ NETWORK CONNECTOR: Testnet funding failed (wallet may already be funded):', error.message);
+      // Continue anyway - wallet might already have funds
     }
   }
 
   async getBalance() {
-    if (!this.client || !this.wallet) {
-      throw new Error('Not connected or no wallet');
+    if (!this.isConnected || !this.wallet) {
+      return 0;
     }
-
+    
     try {
       const response = await this.client.request({
         command: 'account_info',
         account: this.wallet.address,
         ledger_index: 'validated'
       });
-
-      const balance = xrpl.dropsToXrp(response.result.account_data.Balance);
-      return parseFloat(balance);
+      
+      // Convert from drops to XRP
+      const balance = Number(response.result.account_data.Balance) / 1000000;
+      return balance;
+      
     } catch (error) {
-      console.error('❌ BEAST MODE: Balance check failed:', error.message);
+      console.error('❌ NETWORK CONNECTOR: Failed to get balance:', error.message);
       return 0;
     }
   }
 
   async submitTransaction(transaction) {
-    if (!this.client || !this.wallet) {
-      throw new Error('Not connected or no wallet');
+    if (!this.isConnected || !this.wallet) {
+      throw new Error('Not connected to network or wallet not initialized');
     }
-
+    
     try {
+      console.log('📤 NETWORK CONNECTOR: Submitting transaction...');
+      
+      // Prepare and sign transaction
       const prepared = await this.client.autofill(transaction);
       const signed = this.wallet.sign(prepared);
+      
+      // Submit transaction
       const result = await this.client.submitAndWait(signed.tx_blob);
       
-      console.log(`✅ BEAST MODE: Transaction submitted successfully`);
+      console.log('✅ NETWORK CONNECTOR: Transaction submitted successfully!');
+      console.log(`🔗 Transaction hash: ${result.result.hash}`);
+      
       return result;
+      
     } catch (error) {
-      console.error('❌ BEAST MODE: Transaction failed:', error.message);
+      console.error('❌ NETWORK CONNECTOR: Transaction failed:', error.message);
       throw error;
     }
   }
 
-  setupEventListeners() {
-    if (!this.client) return;
-
-    this.client.on('connected', () => {
-      console.log('🔌 BEAST MODE: Connected to XRPL');
-    });
-
-    this.client.on('disconnected', () => {
-      console.log('🔌 BEAST MODE: Disconnected from XRPL');
-      this.isConnected = false;
-    });
-
-    this.client.on('error', (error) => {
-      console.error('❌ BEAST MODE: XRPL connection error:', error);
-    });
+  async getAccountTransactions(limit = 10) {
+    if (!this.isConnected || !this.wallet) {
+      return [];
+    }
+    
+    try {
+      const response = await this.client.request({
+        command: 'account_tx',
+        account: this.wallet.address,
+        limit: limit,
+        ledger_index: 'validated'
+      });
+      
+      return response.result.transactions || [];
+      
+    } catch (error) {
+      console.error('❌ NETWORK CONNECTOR: Failed to get transactions:', error.message);
+      return [];
+    }
   }
 
-  async disconnect() {
-    if (this.client) {
-      await this.client.disconnect();
-      this.isConnected = false;
-      this.currentNetwork = null;
-      console.log('🔌 BEAST MODE: Disconnected from XRPL');
+  async getServerInfo() {
+    if (!this.isConnected) {
+      return null;
+    }
+    
+    try {
+      const response = await this.client.request({
+        command: 'server_info'
+      });
+      
+      return response.result.info;
+      
+    } catch (error) {
+      console.error('❌ NETWORK CONNECTOR: Failed to get server info:', error.message);
+      return null;
     }
   }
 
   getStatus() {
     return {
       isConnected: this.isConnected,
-      network: this.currentNetwork,
-      wallet: this.wallet ? this.wallet.address : null,
-      connectionAttempts: this.connectionAttempts
+      currentNetwork: this.currentNetwork,
+      walletAddress: this.wallet ? this.wallet.address : null,
+      connectionAttempts: this.connectionAttempts,
+      client: this.client ? 'initialized' : 'not initialized'
     };
+  }
+
+  async disconnect() {
+    console.log('🛑 NETWORK CONNECTOR: Disconnecting...');
+    
+    if (this.client && this.isConnected) {
+      await this.client.disconnect();
+    }
+    
+    this.isConnected = false;
+    this.currentNetwork = null;
+    this.connectionAttempts = 0;
+    
+    console.log('✅ NETWORK CONNECTOR: Disconnected successfully!');
+  }
+
+  delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
 

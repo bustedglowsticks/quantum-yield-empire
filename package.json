@@ -1,10 +1,15 @@
 {
   "name": "quantum-yield-empire",
   "version": "1.0.0",
-  "description": "Quantum Yield Empire - Advanced XRPL DeFi Bot",
-  "main": "beast-mode-network-launcher.js",
+  "description": "Quantum Yield Empire - Advanced XRPL DeFi Bot with Multi-Bot Architecture",
+  "main": "quantum-empire-production.js",
   "scripts": {
-    "start": "node beast-mode-network-launcher.js",
+    "start": "node quantum-empire-production.js",
+    "start:simple": "node quantum-empire-launcher-simple.js",
+    "start:beast": "node beast-mode-network-launcher.js",
+    "start:testnet": "node simple-testnet-dashboard.js",
+    "start:mainnet": "node mainnet-dashboard.js",
+    "dev": "NODE_ENV=development node quantum-empire-production.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -13,12 +18,14 @@
     "express": "^4.18.1",
     "html2canvas": "^1.4.1",
     "redis": "^4.2.0",
-
     "uuid": "^8.3.2",
     "ws": "^8.8.0",
     "xrpl": "^2.7.0"
   },
-  "keywords": ["xrpl", "defi", "bot", "quantum", "yield"],
+  "keywords": ["xrpl", "defi", "bot", "quantum", "yield", "arbitrage", "ai", "multi-bot"],
   "author": "Quantum Yield Empire",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
