@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-console.log('🌐 QUANTUM PROFESSIONAL WEBSITE SERVER STARTING...');
+console.log('QUANTUM PROFESSIONAL WEBSITE SERVER STARTING...');
 
 class ProfessionalWebsiteServer {
   constructor() {
@@ -37,7 +37,7 @@ class ProfessionalWebsiteServer {
     this.app.use((req, res, next) => {
       if (req.path === '/') {
         this.stats.totalVisitors++;
-        console.log(`📊 Visitor #${this.stats.totalVisitors} - ${req.ip}`);
+        console.log(`Visitor #${this.stats.totalVisitors} - ${req.ip}`);
       }
       next();
     });
@@ -92,7 +92,7 @@ class ProfessionalWebsiteServer {
       this.leads.push(lead);
       this.stats.conversions++;
 
-      console.log('📧 NEW LEAD GENERATED:', {
+      console.log('NEW LEAD GENERATED:', {
         name: lead.name,
         email: lead.email,
         tier: lead.tier,
@@ -127,7 +127,7 @@ class ProfessionalWebsiteServer {
 
       this.leads.push(subscriber);
 
-      console.log('📬 NEWSLETTER SIGNUP:', email);
+      console.log('NEWSLETTER SIGNUP:', email);
 
       res.json({
         success: true,
@@ -149,7 +149,7 @@ class ProfessionalWebsiteServer {
         userAgent: req.headers['user-agent']
       };
 
-      console.log('📊 USER INTERACTION:', interaction);
+      console.log('USER INTERACTION:', interaction);
 
       res.json({
         success: true,
@@ -242,7 +242,7 @@ class ProfessionalWebsiteServer {
         demoMode: true
       };
 
-      console.log('🎮 DEMO ACCOUNT CREATED:', demoAccount);
+      console.log('DEMO ACCOUNT CREATED:', demoAccount);
 
       res.json({
         success: true,
@@ -295,35 +295,35 @@ class ProfessionalWebsiteServer {
         ? path.join(__dirname, 'enhanced-index.html')
         : path.join(__dirname, 'index.html');
       
-      console.log(`📄 Serving ${useEnhanced ? 'ENHANCED' : 'standard'} professional website from: ${indexPath}`);
+      console.log(`Serving ${useEnhanced ? 'ENHANCED' : 'standard'} professional website from: ${indexPath}`);
       
       res.sendFile(indexPath, (err) => {
         if (err) {
-          console.error('❌ Error serving index.html:', err);
+          console.error('Error serving index.html:', err);
           res.status(404).send(`
             <div style="font-family: 'Inter', Arial, sans-serif; max-width: 1200px; margin: 50px auto; padding: 40px; text-align: center; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 20px;">
-              <h1 style="color: #1e293b; font-size: 2.5em; margin-bottom: 20px;">🚀 Quantum Yield Empire</h1>
+              <h1 style="color: #1e293b; font-size: 2.5em; margin-bottom: 20px;">Quantum Yield Empire</h1>
               <h2 style="color: #3b82f6; font-size: 1.8em; margin-bottom: 30px;">AI-Powered Financial Intelligence Platform</h2>
               
               <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin: 40px 0;">
-                <h3 style="color: #10b981; font-size: 1.5em; margin-bottom: 20px;">🔥 Generate 35%+ APY with Advanced AI</h3>
+                <h3 style="color: #10b981; font-size: 1.5em; margin-bottom: 20px;">Generate 35%+ APY with Advanced AI</h3>
                 <p style="color: #64748b; font-size: 1.1em; margin-bottom: 30px;">Institutional-grade algorithms, real-time market analysis, zero effort required</p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
                   <a href="https://quantum-yield-empire.onrender.com" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 20px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: transform 0.3s;">
-                    🚀 Launch AI Platform
+                    Launch AI Platform
                   </a>
                   <a href="https://quantum-testnet-dashboard.onrender.com" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 20px; border-radius: 12px; text-decoration: none; font-weight: 600;">
-                    🧪 Demo Environment
+                    Demo Environment
                   </a>
                   <a href="https://quantum-mainnet-dashboard.onrender.com" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; padding: 20px; border-radius: 12px; text-decoration: none; font-weight: 600;">
-                    📊 Analytics Suite
+                    Analytics Suite
                   </a>
                 </div>
               </div>
 
               <div style="background: rgba(59, 130, 246, 0.1); padding: 30px; border-radius: 15px; margin: 40px 0; border: 1px solid #3b82f6;">
-                <h3 style="color: #1e293b; margin-bottom: 20px;">💰 Investment Intelligence Tiers</h3>
+                <h3 style="color: #1e293b; margin-bottom: 20px;">Investment Intelligence Tiers</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
                   <div style="text-align: center;">
                     <div style="font-size: 1.5em; font-weight: bold; color: #3b82f6;">$1,000+</div>
@@ -341,7 +341,7 @@ class ProfessionalWebsiteServer {
               </div>
 
               <div style="background: rgba(239, 68, 68, 0.1); padding: 20px; border-radius: 10px; margin: 40px 0; border-left: 4px solid #ef4444;">
-                <div style="color: #dc2626; font-weight: bold; margin-bottom: 10px;">⚠️ Investment Risk Disclosure</div>
+                <div style="color: #dc2626; font-weight: bold; margin-bottom: 10px;">Investment Risk Disclosure</div>
                 <div style="color: #64748b; font-size: 0.9em;">
                   All investments carry risk. AI trading involves substantial risk of loss. Only invest capital you can afford to lose. 
                   Past performance does not guarantee future results.
@@ -350,7 +350,7 @@ class ProfessionalWebsiteServer {
 
               <div style="margin-top: 40px;">
                 <p style="color: #64748b; font-size: 1.1em;">
-                  <strong>💡 Try Enhanced Design:</strong> 
+                  <strong>Try Enhanced Design:</strong> 
                   <a href="?design=enhanced" style="color: #3b82f6; text-decoration: none; font-weight: 600;">
                     View Premium Interface
                   </a>
@@ -365,10 +365,10 @@ class ProfessionalWebsiteServer {
     // Enhanced design preview route
     this.app.get('/enhanced', (req, res) => {
       const indexPath = path.join(__dirname, 'enhanced-index.html');
-      console.log(`📄 Serving ENHANCED professional website from: ${indexPath}`);
+      console.log(`Serving ENHANCED professional website from: ${indexPath}`);
       res.sendFile(indexPath, (err) => {
         if (err) {
-          console.error('❌ Error serving enhanced-index.html:', err);
+          console.error('Error serving enhanced-index.html:', err);
           res.redirect('/?design=enhanced');
         }
       });
@@ -420,16 +420,16 @@ class ProfessionalWebsiteServer {
     this.initialize();
     
     this.server = this.app.listen(this.PORT, '0.0.0.0', () => {
-      console.log(`✅ QUANTUM PROFESSIONAL WEBSITE: Running on port ${this.PORT}`);
-      console.log(`🌐 Professional URL: ${process.env.RENDER_EXTERNAL_URL || `http://localhost:${this.PORT}`}`);
-      console.log('🎯 Features enabled:');
-      console.log('   - 💰 Pricing calculator');
-      console.log('   - 📧 Contact form');
-      console.log('   - 📬 Newsletter signup');
-      console.log('   - 📊 Live statistics');
-      console.log('   - 🎮 Demo accounts');
-      console.log('   - 📈 Performance data');
-      console.log('   - 🎯 Lead tracking');
+      console.log(`QUANTUM PROFESSIONAL WEBSITE: Running on port ${this.PORT}`);
+      console.log(`Professional URL: ${process.env.RENDER_EXTERNAL_URL || `http://localhost:${this.PORT}`}`);
+      console.log('Features enabled:');
+      console.log('   - Pricing calculator');
+      console.log('   - Contact form');
+      console.log('   - Newsletter signup');
+      console.log('   - Live statistics');
+      console.log('   - Demo accounts');
+      console.log('   - Performance data');
+      console.log('   - Lead tracking');
     });
 
     // Simulate some activity for demo purposes
@@ -462,17 +462,17 @@ class ProfessionalWebsiteServer {
   stop() {
     if (this.server) {
       this.server.close();
-      console.log('✅ QUANTUM PROFESSIONAL WEBSITE: Stopped');
+      console.log('QUANTUM PROFESSIONAL WEBSITE: Stopped');
     }
   }
 }
 
 // Main execution
 async function main() {
-  console.log('🌐 QUANTUM PROFESSIONAL WEBSITE - CUSTOMER ACQUISITION PLATFORM!');
-  console.log('💰 Pricing & Information Hub');
-  console.log('📊 Lead Generation System');
-  console.log('🎯 Customer Conversion Engine');
+  console.log('QUANTUM PROFESSIONAL WEBSITE - CUSTOMER ACQUISITION PLATFORM');
+  console.log('Pricing & Information Hub');
+  console.log('Lead Generation System');
+  console.log('Customer Conversion Engine');
   console.log('');
 
   const website = new ProfessionalWebsiteServer();
@@ -480,25 +480,25 @@ async function main() {
   try {
     website.start();
     
-    console.log('🎉 PROFESSIONAL WEBSITE LAUNCHED SUCCESSFULLY! 🎉');
-    console.log('💰 Customer acquisition system active!');
-    console.log('📈 Lead generation tracking enabled!');
+    console.log('PROFESSIONAL WEBSITE LAUNCHED SUCCESSFULLY');
+    console.log('Customer acquisition system active');
+    console.log('Lead generation tracking enabled');
     
     // Handle graceful shutdown
     process.on('SIGINT', () => {
-      console.log('\n🛑 Stopping Professional Website...');
+      console.log('\nStopping Professional Website...');
       website.stop();
       process.exit(0);
     });
 
     process.on('SIGTERM', () => {
-      console.log('\n🛑 Stopping Professional Website...');
+      console.log('\nStopping Professional Website...');
       website.stop();
       process.exit(0);
     });
     
   } catch (error) {
-    console.error('❌ PROFESSIONAL WEBSITE: Launch failed:', error.message);
+    console.error('PROFESSIONAL WEBSITE: Launch failed:', error.message);
     process.exit(1);
   }
 }
