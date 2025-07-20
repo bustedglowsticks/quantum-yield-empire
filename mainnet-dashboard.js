@@ -1,344 +1,321 @@
-const express = require('express');
-const xrpl = require('xrpl');
+const QuantumEmpireProduction = require('./quantum-empire-production.js');
 
-console.log('🔥 MAINNET DASHBOARD - REAL XRPL DATA! 🔥');
+console.log('📊 MAINNET QUANTUM YIELD EMPIRE DASHBOARD! 📊');
 
-class MainnetDashboard {
+class MainnetDashboard extends QuantumEmpireProduction {
   constructor() {
-    this.app = express();
-    this.client = null;
-    this.walletAddress = 'rM1115GJxpbf1r28f3qHMdA972nk9tDQY1'; // Your bot's wallet
-    this.port = process.env.PORT || 3007;
-    this.isConnected = false;
-    this.walletData = {
-      address: this.walletAddress,
-      balance: 0,
-      lastUpdated: null,
-      transactions: [],
-      yieldMetrics: {
-        totalAPY: 280.7,
-        baseAPY: 35.0,
-        quantumBoost: 3.0,
-        ecoMultiplier: 1.24,
-        viralBoost: 1.5,
-        nftRoyalty: 1.25,
-        multiChainArb: 1.15
-      }
-    };
+    super();
+    this.currentNetwork = 'mainnet';
   }
 
-  async start() {
-    console.log('🌐 Connecting to XRPL Mainnet...');
+  async launchEmpire(network = 'mainnet') {
+    console.log('📊 MAINNET DASHBOARD: Launching performance monitoring dashboard...');
+    return super.launchEmpire(network);
+  }
+
+  async startWebDashboard() {
+    console.log('🌐 MAINNET DASHBOARD: Starting mainnet performance dashboard...');
     
-    try {
-      // Connect to mainnet
-      this.client = new xrpl.Client('wss://s1.ripple.com');
-      await this.client.connect();
-      this.isConnected = true;
-      
-      console.log('✅ Connected to XRPL Mainnet!');
-      console.log(`💰 Monitoring wallet: ${this.walletAddress}`);
-      
-      // Setup routes
-      this.setupRoutes();
-      
-      // Start server
-      this.app.listen(this.port, () => {
-        console.log(`🔥 MAINNET DASHBOARD RUNNING ON PORT ${this.port}! 🔥`);
-        console.log(`🌐 Access your dashboard at: http://localhost:${this.port}`);
-        console.log('💰 Real XRPL mainnet data streaming!');
-        console.log('🚀 Ready to dominate the real DeFi ecosystem!');
+    this.expressApp = require('express')();
+    const PORT = process.env.PORT || 3003;
+    
+    // Middleware
+    this.expressApp.use(require('express').json());
+    this.expressApp.use(require('express').static(require('path').join(__dirname, 'professional-website')));
+    this.expressApp.use(require('express').static(__dirname));
+    
+    // Health check endpoint
+    this.expressApp.get('/health', (req, res) => {
+      res.json({ 
+        status: 'healthy',
+        service: 'Quantum Yield Empire - Mainnet Dashboard',
+        timestamp: new Date(),
+        empire: this.empireStatus,
+        network: this.currentNetwork,
+        wallet: this.wallet ? this.wallet.address : null
       });
-      
-      // Start real-time updates
-      this.startRealTimeUpdates();
-      
-    } catch (error) {
-      console.error('❌ Mainnet dashboard connection failed:', error.message);
-      throw error;
-    }
-  }
-
-  setupRoutes() {
-    // Serve static files
-    this.app.use(express.static('public'));
+    });
     
-    // API endpoints
-    this.app.get('/api/wallet', async (req, res) => {
-      try {
-        await this.updateWalletData();
-        res.json(this.walletData);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    });
-
-    this.app.get('/api/transactions', async (req, res) => {
-      try {
-        const transactions = await this.getRecentTransactions();
-        res.json(transactions);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    });
-
-    // Main dashboard page
-    this.app.get('/', (req, res) => {
+    // Setup API endpoints
+    this.setupAPIEndpoints();
+    
+    // Main dashboard route with mainnet performance focus
+    this.expressApp.get('/', (req, res) => {
       res.send(`
         <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Quantum Yield Empire - Mainnet Dashboard</title>
+            <title>📊 Quantum Yield Empire - Mainnet Dashboard</title>
             <style>
-                * { margin: 0; padding: 0; box-sizing: border-box; }
-                body { 
+                body {
                     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
                     color: white;
+                    margin: 0;
+                    padding: 20px;
                     min-height: 100vh;
                 }
                 .container {
-                    max-width: 1200px;
+                    max-width: 1400px;
                     margin: 0 auto;
-                    padding: 20px;
+                    text-align: center;
                 }
                 .header {
-                    text-align: center;
-                    margin-bottom: 30px;
+                    margin-bottom: 40px;
                 }
-                .header h1 {
-                    font-size: 2.5em;
-                    margin-bottom: 10px;
+                .title {
+                    font-size: 3em;
+                    margin-bottom: 20px;
                     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
                 }
-                .status {
-                    display: inline-block;
-                    padding: 5px 15px;
-                    border-radius: 20px;
+                .mainnet-badge {
+                    background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+                    padding: 10px 20px;
+                    border-radius: 25px;
+                    font-size: 1.2em;
                     font-weight: bold;
-                    margin: 10px 0;
+                    margin: 20px 0;
+                    display: inline-block;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
                 }
-                .status.connected { background: #4CAF50; }
-                .status.disconnected { background: #f44336; }
-                .grid {
+                .performance-grid {
                     display: grid;
                     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                     gap: 20px;
-                    margin-bottom: 30px;
+                    margin: 40px 0;
                 }
-                .card {
+                .performance-card {
                     background: rgba(255,255,255,0.1);
-                    backdrop-filter: blur(10px);
                     border-radius: 15px;
-                    padding: 20px;
+                    padding: 30px;
+                    backdrop-filter: blur(10px);
                     border: 1px solid rgba(255,255,255,0.2);
+                    text-align: left;
                 }
-                .card h3 {
+                .metric-value {
+                    font-size: 2.5em;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                    color: #00ff88;
+                }
+                .metric-label {
+                    font-size: 1.1em;
+                    opacity: 0.8;
                     margin-bottom: 15px;
-                    color: #FFD700;
                 }
-                .metric {
-                    display: flex;
-                    justify-content: space-between;
-                    margin: 10px 0;
-                    padding: 10px;
-                    background: rgba(255,255,255,0.05);
-                    border-radius: 8px;
-                }
-                .metric .value {
-                    font-weight: bold;
-                    color: #FFD700;
-                }
-                .yield-projection {
-                    background: linear-gradient(45deg, #FFD700, #FFA500);
-                    color: #333;
-                    padding: 15px;
-                    border-radius: 10px;
-                    margin: 10px 0;
-                    text-align: center;
-                    font-weight: bold;
-                }
-                .transactions {
-                    max-height: 300px;
-                    overflow-y: auto;
-                }
-                .transaction {
-                    padding: 10px;
-                    margin: 5px 0;
-                    background: rgba(255,255,255,0.05);
-                    border-radius: 5px;
+                .metric-change {
                     font-size: 0.9em;
+                    padding: 5px 10px;
+                    border-radius: 15px;
+                    background: rgba(0,255,136,0.2);
                 }
-                .refresh-btn {
-                    background: #4CAF50;
-                    color: white;
-                    border: none;
-                    padding: 10px 20px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    font-size: 1em;
+                .real-time-indicator {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background: #00ff88;
+                    margin-right: 8px;
+                    animation: pulse 2s infinite;
+                }
+                @keyframes pulse {
+                    0% { opacity: 1; transform: scale(1); }
+                    50% { opacity: 0.5; transform: scale(1.1); }
+                    100% { opacity: 1; transform: scale(1); }
+                }
+                .chart-container {
+                    background: rgba(0,0,0,0.3);
+                    border-radius: 15px;
+                    padding: 30px;
+                    margin: 30px 0;
+                }
+                .api-endpoints {
+                    background: rgba(0,0,0,0.2);
+                    border-radius: 15px;
+                    padding: 30px;
+                    margin: 30px 0;
+                    text-align: left;
+                }
+                .endpoint {
+                    background: rgba(255,255,255,0.1);
+                    padding: 15px;
+                    border-radius: 8px;
                     margin: 10px 0;
+                    font-family: monospace;
                 }
-                .refresh-btn:hover { background: #45a049; }
             </style>
         </head>
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>🔥 Quantum Yield Empire</h1>
-                    <h2>Mainnet Dashboard</h2>
-                    <div class="status" id="status">Connecting...</div>
+                    <h1 class="title">📊 Quantum Yield Empire</h1>
+                    <div class="mainnet-badge">🌐 MAINNET PERFORMANCE DASHBOARD 🌐</div>
+                    <p style="font-size: 1.2em;"><span class="real-time-indicator"></span>Real-time Performance Monitoring</p>
                 </div>
-                
-                <div class="grid">
-                    <div class="card">
-                        <h3>💰 Wallet Status</h3>
-                        <div class="metric">
-                            <span>Address:</span>
-                            <span class="value" id="walletAddress">Loading...</span>
-                        </div>
-                        <div class="metric">
-                            <span>Balance:</span>
-                            <span class="value" id="balance">Loading...</span>
-                        </div>
-                        <div class="metric">
-                            <span>Last Updated:</span>
-                            <span class="value" id="lastUpdated">Loading...</span>
-                        </div>
-                        <button class="refresh-btn" onclick="refreshData()">🔄 Refresh</button>
+
+                <div class="performance-grid">
+                    <div class="performance-card">
+                        <div class="metric-value">${(this.empireStatus.totalYield * 100).toFixed(2)}%</div>
+                        <div class="metric-label">Current APY</div>
+                        <div class="metric-change">+${((this.empireStatus.totalYield - 0.30) * 100).toFixed(1)}% vs target</div>
                     </div>
                     
-                    <div class="card">
-                        <h3>📊 Yield Metrics</h3>
-                        <div class="metric">
-                            <span>Total APY:</span>
-                            <span class="value" id="totalAPY">Loading...</span>
-                        </div>
-                        <div class="metric">
-                            <span>Base APY:</span>
-                            <span class="value" id="baseAPY">Loading...</span>
-                        </div>
-                        <div class="metric">
-                            <span>Quantum Boost:</span>
-                            <span class="value" id="quantumBoost">Loading...</span>
-                        </div>
-                        <div class="yield-projection" id="projection">
-                            Loading projections...
-                        </div>
+                    <div class="performance-card">
+                        <div class="metric-value">$${this.empireStatus.totalProfit.toLocaleString()}</div>
+                        <div class="metric-label">Total Profit</div>
+                        <div class="metric-change">Real-time earnings</div>
                     </div>
                     
-                    <div class="card">
-                        <h3>🔄 Recent Transactions</h3>
-                        <div class="transactions" id="transactions">
-                            <div class="transaction">Loading transactions...</div>
+                    <div class="performance-card">
+                        <div class="metric-value">${this.empireStatus.botsActive}</div>
+                        <div class="metric-label">Active Strategies</div>
+                        <div class="metric-change">Multi-bot operation</div>
+                    </div>
+                    
+                    <div class="performance-card">
+                        <div class="metric-value">${(this.empireStatus.riskScore * 100).toFixed(1)}%</div>
+                        <div class="metric-label">Risk Score</div>
+                        <div class="metric-change">Low risk profile</div>
+                    </div>
+                    
+                    <div class="performance-card">
+                        <div class="metric-value">${this.networkConnected ? 'LIVE' : 'OFFLINE'}</div>
+                        <div class="metric-label">Network Status</div>
+                        <div class="metric-change">XRPL Mainnet</div>
+                    </div>
+                    
+                    <div class="performance-card">
+                        <div class="metric-value">${(this.empireStatus.diversificationScore * 100).toFixed(1)}%</div>
+                        <div class="metric-label">Diversification</div>
+                        <div class="metric-change">Portfolio balance</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>📈 Bot Allocation Strategy</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2em; color: #ff6b6b;">🔥</div>
+                            <div style="font-size: 1.5em; font-weight: bold;">${(this.empireStatus.botAllocations.beastMode * 100).toFixed(0)}%</div>
+                            <div>Beast Mode Bot</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2em; color: #4ecdc4;">🔄</div>
+                            <div style="font-size: 1.5em; font-weight: bold;">${(this.empireStatus.botAllocations.arbitrage * 100).toFixed(0)}%</div>
+                            <div>Arbitrage Engine</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2em; color: #45b7d1;">🏦</div>
+                            <div style="font-size: 1.5em; font-weight: bold;">${(this.empireStatus.botAllocations.defiStrategies * 100).toFixed(0)}%</div>
+                            <div>DeFi Strategies</div>
                         </div>
                     </div>
+                </div>
+
+                <div class="api-endpoints">
+                    <h2>🔌 Performance API Endpoints</h2>
+                    <div class="endpoint">
+                        <strong>Empire Status:</strong> <a href="/api/empire-status" style="color: #00ff88;">/api/empire-status</a>
+                    </div>
+                    <div class="endpoint">
+                        <strong>Bot Performance:</strong> <a href="/api/bot-performance" style="color: #00ff88;">/api/bot-performance</a>
+                    </div>
+                    <div class="endpoint">
+                        <strong>Wallet Information:</strong> <a href="/api/wallet-info" style="color: #00ff88;">/api/wallet-info</a>
+                    </div>
+                    <div class="endpoint">
+                        <strong>Health Check:</strong> <a href="/health" style="color: #00ff88;">/health</a>
+                    </div>
+                </div>
+
+                <div style="margin-top: 60px; opacity: 0.7; font-size: 0.9em;">
+                    <p><span class="real-time-indicator"></span>Live Mainnet Performance | 📊 Real-time Analytics</p>
+                    <p>Wallet: ${this.wallet ? this.wallet.address : 'Initializing...'}</p>
+                    <p>Last Updated: ${new Date().toLocaleString()}</p>
                 </div>
             </div>
 
             <script>
-                let walletData = {};
+                console.log('📊 Mainnet Performance Dashboard Loaded!');
+                console.log('💰 Tracking real mainnet performance!');
                 
-                async function loadData() {
+                // Auto-refresh performance data every 15 seconds
+                setInterval(async () => {
                     try {
-                        const response = await fetch('/api/wallet');
-                        walletData = await response.json();
-                        updateUI();
-                    } catch (error) {
-                        console.error('Error loading data:', error);
-                    }
-                }
-                
-                function updateUI() {
-                    document.getElementById('status').textContent = walletData.balance !== undefined ? 'Connected' : 'Disconnected';
-                    document.getElementById('status').className = 'status ' + (walletData.balance !== undefined ? 'connected' : 'disconnected');
-                    
-                    document.getElementById('walletAddress').textContent = walletData.address || 'N/A';
-                    document.getElementById('balance').textContent = walletData.balance !== undefined ? walletData.balance + ' XRP' : 'N/A';
-                    document.getElementById('lastUpdated').textContent = walletData.lastUpdated || 'N/A';
-                    
-                    if (walletData.yieldMetrics) {
-                        document.getElementById('totalAPY').textContent = walletData.yieldMetrics.totalAPY + '%';
-                        document.getElementById('baseAPY').textContent = walletData.yieldMetrics.baseAPY + '%';
-                        document.getElementById('quantumBoost').textContent = walletData.yieldMetrics.quantumBoost + 'x';
+                        const response = await fetch('/api/empire-status');
+                        const data = await response.json();
+                        console.log('Mainnet Performance:', data);
                         
-                        const balance = walletData.balance || 0;
-                        const annualYield = balance * (walletData.yieldMetrics.totalAPY / 100);
-                        document.getElementById('projection').textContent = 
-                            \`Annual Yield: \${annualYield.toFixed(2)} XRP (\${(annualYield * 0.5).toFixed(2)} USD)\`;
+                        // Update real-time metrics if available
+                        if (data.success && data.empire) {
+                            console.log('Empire APY:', (data.empire.totalEmpireYield * 100).toFixed(2) + '%');
+                            console.log('Total Profit:', '$' + data.empire.empireMetrics.totalProfit.toLocaleString());
+                        }
+                    } catch (error) {
+                        console.error('Failed to fetch mainnet performance:', error);
                     }
-                }
+                }, 15000);
                 
-                async function refreshData() {
-                    await loadData();
-                }
-                
-                // Load data every 10 seconds
-                loadData();
-                setInterval(loadData, 10000);
+                // Advanced performance tracking
+                setInterval(async () => {
+                    try {
+                        const botResponse = await fetch('/api/bot-performance');
+                        const botData = await botResponse.json();
+                        
+                        if (botData.success) {
+                            console.log('Bot Performance Update:', {
+                                yield: (botData.performance.totalYield * 100).toFixed(2) + '%',
+                                risk: (botData.performance.riskScore * 100).toFixed(1) + '%',
+                                diversification: (botData.performance.diversificationScore * 100).toFixed(1) + '%'
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Failed to fetch bot performance:', error);
+                    }
+                }, 30000);
             </script>
         </body>
         </html>
       `);
     });
-  }
 
-  async updateWalletData() {
-    if (!this.isConnected) return;
-    
-    try {
-      // Get account info
-      const response = await this.client.request({
-        command: 'account_info',
-        account: this.walletAddress,
-        ledger_index: 'validated'
-      });
-      
-      if (response.result.account_data) {
-        this.walletData.balance = parseFloat(xrpl.dropsToXrp(response.result.account_data.Balance));
-        this.walletData.lastUpdated = new Date().toLocaleString();
-      }
-    } catch (error) {
-      // Account might not be funded yet
-      this.walletData.balance = 0;
-      this.walletData.lastUpdated = new Date().toLocaleString();
-    }
-  }
-
-  async getRecentTransactions() {
-    if (!this.isConnected) return [];
-    
-    try {
-      const response = await this.client.request({
-        command: 'account_tx',
-        account: this.walletAddress,
-        limit: 10
-      });
-      
-      return response.result.transactions || [];
-    } catch (error) {
-      return [];
-    }
-  }
-
-  startRealTimeUpdates() {
-    setInterval(async () => {
-      await this.updateWalletData();
-    }, 10000); // Update every 10 seconds
-  }
-
-  async stop() {
-    if (this.client) {
-      await this.client.disconnect();
-    }
-    console.log('✅ Mainnet dashboard stopped');
+    // Start server
+    this.server = this.expressApp.listen(PORT, '0.0.0.0', () => {
+      console.log(`✅ MAINNET DASHBOARD: Running on port ${PORT}`);
+      console.log(`📊 Performance URL: ${process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`}`);
+    });
   }
 }
 
-// Start the dashboard
-const dashboard = new MainnetDashboard();
-dashboard.start().catch(console.error);
+// Main execution
+async function main() {
+  console.log('📊 STARTING MAINNET PERFORMANCE DASHBOARD! 📊');
+  
+  const mainnetDashboard = new MainnetDashboard();
+  
+  try {
+    const result = await mainnetDashboard.launchEmpire('mainnet');
+    
+    if (result.success) {
+      console.log('🎉 MAINNET DASHBOARD LAUNCHED SUCCESSFULLY! 🎉');
+      console.log('📊 Performance monitoring active on mainnet!');
+    } else {
+      console.error('❌ MAINNET DASHBOARD LAUNCH FAILED:', result.error);
+      process.exit(1);
+    }
+    
+  } catch (error) {
+    console.error('❌ MAINNET DASHBOARD: Critical error:', error.message);
+    process.exit(1);
+  }
+}
 
-module.exports = MainnetDashboard; 
+// Export for use as module
+module.exports = MainnetDashboard;
+
+// Run if this file is executed directly
+if (require.main === module) {
+  main();
+} 

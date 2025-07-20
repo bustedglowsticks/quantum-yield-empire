@@ -1,361 +1,227 @@
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3006;
+const QuantumEmpireProduction = require('./quantum-empire-production.js');
 
-console.log('🔥 Starting Simple Testnet Dashboard...');
+console.log('🔥 TESTNET QUANTUM YIELD EMPIRE DASHBOARD! 🔥');
 
-// Simple testnet data
-let testnetData = {
-  isConnected: true,
-  wallet: 'rn7tf71q96yg05wne2vrpoks',
-  balance: 1104.496854353522,
-  apy: 350.5,
-  totalYield: 84.8,
-  winRate: 72.41,
-  transactions: []
-};
+class TestnetDashboard extends QuantumEmpireProduction {
+  constructor() {
+    super();
+    this.currentNetwork = 'testnet';
+  }
 
-// Update data every 3 seconds
-setInterval(() => {
-  testnetData.balance += (Math.random() - 0.5) * 2;
-  testnetData.apy = 350 + Math.random() * 10;
-  testnetData.totalYield += 0.1;
-  
-  if (Math.random() > 0.8) {
-    testnetData.transactions.unshift({
-      hash: 'txn_' + Math.random().toString(36).substring(2, 15),
-      type: ['Payment', 'OfferCreate', 'TrustSet'][Math.floor(Math.random() * 3)],
-      amount: (Math.random() * 50).toFixed(2) + ' XRP',
-      time: new Date().toLocaleTimeString()
+  async launchEmpire(network = 'testnet') {
+    console.log('🧪 TESTNET DASHBOARD: Launching for development testing...');
+    return super.launchEmpire(network);
+  }
+
+  async startWebDashboard() {
+    console.log('🌐 TESTNET DASHBOARD: Starting testnet-specific dashboard...');
+    
+    this.expressApp = require('express')();
+    const PORT = process.env.PORT || 3002;
+    
+    // Middleware
+    this.expressApp.use(require('express').json());
+    this.expressApp.use(require('express').static(require('path').join(__dirname, 'professional-website')));
+    this.expressApp.use(require('express').static(__dirname));
+    
+    // Health check endpoint
+    this.expressApp.get('/health', (req, res) => {
+      res.json({ 
+        status: 'healthy',
+        service: 'Quantum Yield Empire - Testnet Dashboard',
+        timestamp: new Date(),
+        empire: this.empireStatus,
+        network: this.currentNetwork,
+        wallet: this.wallet ? this.wallet.address : null
+      });
     });
     
-    if (testnetData.transactions.length > 20) {
-      testnetData.transactions = testnetData.transactions.slice(0, 20);
-    }
-  }
-}, 3000);
-
-// API endpoints
-app.get('/api/status', (req, res) => {
-  res.json(testnetData);
-});
-
-app.get('/api/transactions', (req, res) => {
-  res.json(testnetData.transactions);
-});
-
-// Main dashboard
-app.get('/', (req, res) => {
-  res.send(`
-<!DOCTYPE html>
-<html>
-<head>
-    <title>🔥 TESTNET BEAST MODE DASHBOARD 🔥</title>
-    <style>
-        body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            color: #00ff41;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; }
-            to { text-shadow: 0 0 20px #00ff41, 0 0 30px #00ff41; }
-        }
-        .apy-display {
-            font-size: 3rem;
-            text-align: center;
-            margin: 20px 0;
-            color: #00ff41;
-            text-shadow: 0 0 20px #00ff41;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .card {
-            background: rgba(0, 255, 65, 0.1);
-            border: 2px solid #00ff41;
-            border-radius: 15px;
-            padding: 20px;
-        }
-        .card h3 {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .metric {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
-        }
-        .systems {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-        .system {
-            background: rgba(0, 255, 65, 0.1);
-            border: 1px solid #00ff41;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-        }
-        .system.active {
-            background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
-        }
-        .transactions {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .transaction {
-            background: rgba(0, 255, 65, 0.05);
-            border: 1px solid rgba(0, 255, 65, 0.3);
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-        .transaction-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
-        .transaction-hash {
-            color: #00cc33;
-            font-weight: bold;
-        }
-        .transaction-type {
-            color: #00ff41;
-        }
-        .update-time {
-            text-align: center;
-            margin: 20px 0;
-            color: #00cc33;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            border-top: 2px solid #00ff41;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🔥 TESTNET BEAST MODE DASHBOARD 🔥</h1>
-            <p>💰 LIVE XRPL TESTNET DATA | 🚀 INSTITUTIONAL-GRADE PERFORMANCE</p>
-        </div>
-        
-        <div class="apy-display" id="apy-display">APY: 350.5%</div>
-        
-        <div class="grid">
-            <div class="card">
-                <h3>💰 LIVE PERFORMANCE METRICS</h3>
-                <div class="metric">
-                    <span>Current APY:</span>
-                    <span id="current-apy">350.5%</span>
-                </div>
-                <div class="metric">
-                    <span>Wallet Balance:</span>
-                    <span id="balance">1104.50 XRP</span>
-                </div>
-                <div class="metric">
-                    <span>Total Yield:</span>
-                    <span id="total-yield">84.8 XRP</span>
-                </div>
-                <div class="metric">
-                    <span>Win Rate:</span>
-                    <span id="win-rate">72.41%</span>
-                </div>
-                <div class="metric">
-                    <span>Daily Yield:</span>
-                    <span id="daily-yield">10.6 XRP</span>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>🌐 TESTNET STATUS</h3>
-                <div class="metric">
-                    <span>Network:</span>
-                    <span>XRPL Testnet</span>
-                </div>
-                <div class="metric">
-                    <span>Connection:</span>
-                    <span style="color: #00ff41; font-weight: bold;">✅ Connected</span>
-                </div>
-                <div class="metric">
-                    <span>Wallet Address:</span>
-                    <span id="wallet-address">rn7tf71q96yg05wne2vrpoks</span>
-                </div>
-                <div class="metric">
-                    <span>Transactions:</span>
-                    <span id="transaction-count">0</span>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h3>🎯 PASSIVE INCOME PROJECTIONS</h3>
-                <div class="metric">
-                    <span>$100K Capital:</span>
-                    <span>$350,500 annually</span>
-                </div>
-                <div class="metric">
-                    <span>$500K Capital:</span>
-                    <span>$1,752,500 annually</span>
-                </div>
-                <div class="metric">
-                    <span>$1M Capital:</span>
-                    <span>$3,505,000 annually</span>
-                </div>
-                <div class="metric">
-                    <span>Risk Level:</span>
-                    <span style="color: #00ff41;">LOW</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <h3>🔥 BEAST MODE SYSTEMS (ACTIVE)</h3>
-            <div class="systems">
-                <div class="system active">
-                    <h4>🧠 AI-Oracle Surge Detection</h4>
-                    <div>✅ Active</div>
-                </div>
-                <div class="system active">
-                    <h4>💎 NFT Eco-Vault System</h4>
-                    <div>✅ Active</div>
-                </div>
-                <div class="system active">
-                    <h4>⚛️ Quantum Surge Optimizer</h4>
-                    <div>✅ Active</div>
-                </div>
-                <div class="system active">
-                    <h4>🛡️ Hyper-Clawback Annihilator</h4>
-                    <div>✅ Active</div>
-                </div>
-                <div class="system active">
-                    <h4>🏛️ Eco-DAO Governance</h4>
-                    <div>✅ Active</div>
-                </div>
-                <div class="system active">
-                    <h4>🎭 Viral DAO Hype Storm</h4>
-                    <div>✅ Active</div>
-                </div>
-                <div class="system active">
-                    <h4>🌉 Multi-Chain Nexus Bridge</h4>
-                    <div>✅ Active</div>
-                </div>
-                <div class="system active">
-                    <h4>🏛️ Institutional Dashboard</h4>
-                    <div>✅ Active</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <h3>📊 LIVE TESTNET TRANSACTIONS</h3>
-            <div class="transactions" id="transactions">
-                <div style="text-align: center; color: #00cc33;">Loading transactions...</div>
-            </div>
-        </div>
-        
-        <div class="update-time" id="update-time">
-            Last Updated: Loading...
-        </div>
-        
-        <div class="footer">
-            <p>🔥 TESTNET BEAST MODE - LIVE XRPL DATA STREAMING! 🔥</p>
-            <p>💰 REAL PASSIVE INCOME: GENERATING ON TESTNET | 🚀 APY: 350.5% | 🏛️ INSTITUTIONAL-GRADE</p>
-        </div>
-    </div>
+    // Setup API endpoints
+    this.setupAPIEndpoints();
     
-    <script>
-        function updateDashboard() {
-            fetch('/api/status')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('current-apy').textContent = data.apy.toFixed(1) + '%';
-                    document.getElementById('balance').textContent = data.balance.toFixed(2) + ' XRP';
-                    document.getElementById('total-yield').textContent = data.totalYield.toFixed(1) + ' XRP';
-                    document.getElementById('win-rate').textContent = data.winRate.toFixed(2) + '%';
-                    document.getElementById('daily-yield').textContent = (data.balance * data.apy / 100 / 365).toFixed(1) + ' XRP';
-                    document.getElementById('apy-display').textContent = 'APY: ' + data.apy.toFixed(1) + '%';
-                    document.getElementById('wallet-address').textContent = data.wallet;
-                    document.getElementById('transaction-count').textContent = data.transactions.length;
-                    document.getElementById('update-time').textContent = 'Last Updated: ' + new Date().toLocaleString();
-                })
-                .catch(error => console.error('Error updating dashboard:', error));
-        }
-        
-        function updateTransactions() {
-            fetch('/api/transactions')
-                .then(response => response.json())
-                .then(transactions => {
-                    const container = document.getElementById('transactions');
-                    
-                    if (transactions.length === 0) {
-                        container.innerHTML = '<div style="text-align: center; color: #00cc33;">No transactions yet...</div>';
-                        return;
-                    }
-                    
-                    let html = '';
-                    transactions.forEach(tx => {
-                        html += '<div class="transaction">';
-                        html += '<div class="transaction-header">';
-                        html += '<span class="transaction-hash">' + tx.hash + '</span>';
-                        html += '<span class="transaction-type">' + tx.type + '</span>';
-                        html += '</div>';
-                        html += '<div style="color: #00cc33; font-size: 0.8rem;">';
-                        html += '<span>Amount: ' + tx.amount + '</span> | ';
-                        html += '<span>Time: ' + tx.time + '</span>';
-                        html += '</div>';
-                        html += '</div>';
-                    });
-                    
-                    container.innerHTML = html;
-                })
-                .catch(error => console.error('Error updating transactions:', error));
-        }
-        
-        updateDashboard();
-        updateTransactions();
-        
-        setInterval(updateDashboard, 3000);
-        setInterval(updateTransactions, 5000);
-        
-        setInterval(() => {
-            const apyDisplay = document.getElementById('apy-display');
-            apyDisplay.style.textShadow = '0 0 30px #00ff41';
-            setTimeout(() => {
-                apyDisplay.style.textShadow = '0 0 20px #00ff41';
-            }, 500);
-        }, 3000);
-    </script>
-</body>
-</html>
-  `);
-});
+    // Main dashboard route with testnet branding
+    this.expressApp.get('/', (req, res) => {
+      res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>🔥 TESTNET BEAST MODE DASHBOARD 🔥</title>
+            <style>
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+                    color: white;
+                    margin: 0;
+                    padding: 20px;
+                    min-height: 100vh;
+                }
+                .container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    text-align: center;
+                }
+                .header {
+                    margin-bottom: 40px;
+                }
+                .title {
+                    font-size: 3em;
+                    margin-bottom: 20px;
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                }
+                .testnet-badge {
+                    background: rgba(255,0,0,0.8);
+                    padding: 10px 20px;
+                    border-radius: 25px;
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    margin: 20px 0;
+                    display: inline-block;
+                    animation: pulse 2s infinite;
+                }
+                @keyframes pulse {
+                    0% { opacity: 1; }
+                    50% { opacity: 0.7; }
+                    100% { opacity: 1; }
+                }
+                .stats {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 20px;
+                    margin: 40px 0;
+                }
+                .stat-card {
+                    background: rgba(255,255,255,0.1);
+                    border-radius: 15px;
+                    padding: 30px;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255,255,255,0.2);
+                }
+                .stat-value {
+                    font-size: 2.5em;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+                .stat-label {
+                    font-size: 1.1em;
+                    opacity: 0.8;
+                }
+                .warning {
+                    background: rgba(255,193,7,0.2);
+                    border: 2px solid #FFC107;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin: 30px 0;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1 class="title">🔥 TESTNET BEAST MODE</h1>
+                    <div class="testnet-badge">🧪 DEVELOPMENT ENVIRONMENT 🧪</div>
+                    <p style="font-size: 1.2em;">Testing Your Quantum Yield Empire</p>
+                </div>
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`🔥 TESTNET DASHBOARD RUNNING ON PORT ${PORT}! 🔥`);
-  console.log(`🌐 Access your dashboard at: http://localhost:${PORT}`);
-  console.log(`💰 Real XRPL testnet data streaming!`);
-  console.log(`🚀 Ready to dominate the DeFi ecosystem!`);
-}); 
+                <div class="warning">
+                    <h3>⚠️ TESTNET ENVIRONMENT ⚠️</h3>
+                    <p>This is a development environment using test XRP tokens. No real money is involved.</p>
+                    <p>Use this dashboard to test strategies before deploying to mainnet.</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">${(this.empireStatus.totalYield * 100).toFixed(1)}%</div>
+                        <div class="stat-label">Test APY</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${this.empireStatus.botsActive}</div>
+                        <div class="stat-label">Test Bots</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">TESTNET</div>
+                        <div class="stat-label">Network</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${this.networkConnected ? 'CONNECTED' : 'OFFLINE'}</div>
+                        <div class="stat-label">Test Network</div>
+                    </div>
+                </div>
+
+                <div style="margin: 40px 0; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 30px;">
+                    <h2>🧪 Development Features</h2>
+                    <div style="text-align: left;">
+                        <p>✅ Test wallet automatically funded with test XRP</p>
+                        <p>✅ All strategies running in simulation mode</p>
+                        <p>✅ Safe environment for experimentation</p>
+                        <p>✅ Real-time performance monitoring</p>
+                        <p>✅ API endpoints for testing integrations</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 60px; opacity: 0.7; font-size: 0.9em;">
+                    <p>🔥 Testnet Beast Mode Active | 🧪 Development Environment</p>
+                    <p>Wallet: ${this.wallet ? this.wallet.address : 'Initializing...'}</p>
+                    <p>Last Updated: ${new Date().toLocaleString()}</p>
+                </div>
+            </div>
+
+            <script>
+                console.log('🔥 Testnet Beast Mode Dashboard Loaded!');
+                console.log('🧪 Development environment ready for testing!');
+                
+                // Auto-refresh every 30 seconds
+                setInterval(async () => {
+                    try {
+                        const response = await fetch('/health');
+                        const data = await response.json();
+                        console.log('Testnet Status:', data);
+                    } catch (error) {
+                        console.error('Failed to fetch testnet status:', error);
+                    }
+                }, 30000);
+            </script>
+        </body>
+        </html>
+      `);
+    });
+
+    // Start server
+    this.server = this.expressApp.listen(PORT, '0.0.0.0', () => {
+      console.log(`✅ TESTNET DASHBOARD: Running on port ${PORT}`);
+      console.log(`🧪 Testnet URL: ${process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`}`);
+    });
+  }
+}
+
+// Main execution
+async function main() {
+  console.log('🧪 STARTING TESTNET BEAST MODE DASHBOARD! 🧪');
+  
+  const testnetDashboard = new TestnetDashboard();
+  
+  try {
+    const result = await testnetDashboard.launchEmpire('testnet');
+    
+    if (result.success) {
+      console.log('🎉 TESTNET DASHBOARD LAUNCHED SUCCESSFULLY! 🎉');
+      console.log('🧪 Development environment ready for testing!');
+    } else {
+      console.error('❌ TESTNET DASHBOARD LAUNCH FAILED:', result.error);
+      process.exit(1);
+    }
+    
+  } catch (error) {
+    console.error('❌ TESTNET DASHBOARD: Critical error:', error.message);
+    process.exit(1);
+  }
+}
+
+// Export for use as module
+module.exports = TestnetDashboard;
+
+// Run if this file is executed directly
+if (require.main === module) {
+  main();
+} 

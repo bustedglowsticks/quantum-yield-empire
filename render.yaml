@@ -2,7 +2,7 @@ services:
   # Main Quantum Yield Empire - Production Version
   - type: web
     name: quantum-yield-empire
-    env: node
+    runtime: node
     plan: starter
     buildCommand: npm install
     startCommand: node quantum-empire-production.js
@@ -18,7 +18,7 @@ services:
   # Professional Website & Dashboard
   - type: web
     name: quantum-professional-website
-    env: node
+    runtime: node
     plan: starter
     buildCommand: npm install
     startCommand: node professional-website/server.js
@@ -31,7 +31,7 @@ services:
   # Testnet Dashboard for Development
   - type: web
     name: quantum-testnet-dashboard
-    env: node
+    runtime: node
     plan: starter
     buildCommand: npm install
     startCommand: node simple-testnet-dashboard.js
@@ -46,7 +46,7 @@ services:
   # Mainnet Performance Dashboard
   - type: web
     name: quantum-mainnet-dashboard
-    env: node
+    runtime: node
     plan: starter
     buildCommand: npm install
     startCommand: node mainnet-dashboard.js
@@ -63,7 +63,7 @@ services:
   # Background Worker for Beast Mode Bot
   - type: worker
     name: quantum-beast-mode-worker
-    env: node
+    runtime: node
     plan: starter
     buildCommand: npm install
     startCommand: node beast-mode-network-launcher.js mainnet
