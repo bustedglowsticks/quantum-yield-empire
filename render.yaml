@@ -47,3 +47,19 @@ services:
     plan: starter
     region: oregon
     branch: master
+
+  - type: web
+    name: quantum-mainnet-dashboard
+    runtime: node
+    buildCommand: npm install
+    startCommand: node mainnet-dashboard.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10002
+    healthCheckPath: /
+    autoDeploy: true
+    plan: starter
+    region: oregon
+    branch: master
