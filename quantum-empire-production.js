@@ -53,7 +53,7 @@ class QuantumEmpireProduction {
       return {
         success: true,
         message: 'Quantum Yield Empire (Production) launched successfully!',
-        dashboard: process.env.PORT ? `https://quantum-yield-empire.onrender.com` : 'http://localhost:3000',
+        dashboard: process.env.RENDER_EXTERNAL_URL || `http://localhost:${process.env.PORT || 3000}`,
         status: this.empireStatus
       };
       
@@ -136,25 +136,196 @@ class QuantumEmpireProduction {
     const PORT = process.env.PORT || 3000;
     
     // Middleware
-    this.expressApp.use(express.static(path.join(__dirname, 'professional-website')));
     this.expressApp.use(express.json());
+    
+    // Try to serve from professional-website directory first
+    this.expressApp.use(express.static(path.join(__dirname, 'professional-website')));
+    
+    // Fallback to current directory
+    this.expressApp.use(express.static(__dirname));
     
     // Health check endpoint
     this.expressApp.get('/health', (req, res) => {
       res.json({ 
-        status: 'healthy', 
+        status: 'healthy',
+        service: 'Quantum Yield Empire - Main',
         timestamp: new Date(),
-        empire: this.empireStatus 
+        empire: this.empireStatus,
+        network: this.currentNetwork,
+        wallet: this.wallet ? this.wallet.address : null
       });
     });
     
     // API endpoints
     this.setupAPIEndpoints();
     
+    // Main dashboard route
+    this.expressApp.get('/', (req, res) => {
+      // Create a beautiful landing page if no HTML file found
+      res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>🚀 Quantum Yield Empire - Ultimate Passive Income Machine</title>
+            <style>
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    margin: 0;
+                    padding: 20px;
+                    min-height: 100vh;
+                }
+                .container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    text-align: center;
+                }
+                .header {
+                    margin-bottom: 40px;
+                }
+                .title {
+                    font-size: 3em;
+                    margin-bottom: 20px;
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                }
+                .subtitle {
+                    font-size: 1.5em;
+                    opacity: 0.9;
+                }
+                .stats {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 20px;
+                    margin: 40px 0;
+                }
+                .stat-card {
+                    background: rgba(255,255,255,0.1);
+                    border-radius: 15px;
+                    padding: 30px;
+                    backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255,255,255,0.2);
+                }
+                .stat-value {
+                    font-size: 2.5em;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+                .stat-label {
+                    font-size: 1.1em;
+                    opacity: 0.8;
+                }
+                .api-section {
+                    margin: 40px 0;
+                    text-align: left;
+                    background: rgba(0,0,0,0.2);
+                    border-radius: 15px;
+                    padding: 30px;
+                }
+                .api-endpoint {
+                    background: rgba(255,255,255,0.1);
+                    padding: 15px;
+                    border-radius: 8px;
+                    margin: 10px 0;
+                    font-family: monospace;
+                }
+                .status-indicator {
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background: #4CAF50;
+                    margin-right: 8px;
+                    animation: pulse 2s infinite;
+                }
+                @keyframes pulse {
+                    0% { opacity: 1; }
+                    50% { opacity: 0.5; }
+                    100% { opacity: 1; }
+                }
+                .footer {
+                    margin-top: 60px;
+                    opacity: 0.7;
+                    font-size: 0.9em;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1 class="title">🚀 Quantum Yield Empire</h1>
+                    <p class="subtitle">Ultimate Passive Income Machine - Production Version</p>
+                    <p><span class="status-indicator"></span>LIVE ON ${this.currentNetwork?.toUpperCase() || 'MAINNET'}</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">${(this.empireStatus.totalYield * 100).toFixed(1)}%</div>
+                        <div class="stat-label">Current APY</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${this.empireStatus.botsActive}</div>
+                        <div class="stat-label">Active Bots</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${this.empireStatus.aiSystems}</div>
+                        <div class="stat-label">AI Systems</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${this.networkConnected ? 'CONNECTED' : 'OFFLINE'}</div>
+                        <div class="stat-label">Network Status</div>
+                    </div>
+                </div>
+
+                <div class="api-section">
+                    <h2>🔌 Live API Endpoints</h2>
+                    <div class="api-endpoint">
+                        <strong>Empire Status:</strong> <a href="/api/empire-status" style="color: #4CAF50;">/api/empire-status</a>
+                    </div>
+                    <div class="api-endpoint">
+                        <strong>Bot Performance:</strong> <a href="/api/bot-performance" style="color: #4CAF50;">/api/bot-performance</a>
+                    </div>
+                    <div class="api-endpoint">
+                        <strong>Wallet Info:</strong> <a href="/api/wallet-info" style="color: #4CAF50;">/api/wallet-info</a>
+                    </div>
+                    <div class="api-endpoint">
+                        <strong>Health Check:</strong> <a href="/health" style="color: #4CAF50;">/health</a>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <p>🔥 Beast Mode Network Bot | 🔄 Arbitrage Engine | 🏦 DeFi Strategies</p>
+                    <p>Wallet: ${this.wallet ? this.wallet.address : 'Initializing...'}</p>
+                    <p>Last Updated: ${new Date().toLocaleString()}</p>
+                </div>
+            </div>
+
+            <script>
+                // Auto-refresh empire status every 30 seconds
+                setInterval(async () => {
+                    try {
+                        const response = await fetch('/api/empire-status');
+                        const data = await response.json();
+                        console.log('Empire Status:', data);
+                    } catch (error) {
+                        console.error('Failed to fetch empire status:', error);
+                    }
+                }, 30000);
+
+                console.log('🚀 Quantum Yield Empire Dashboard Loaded!');
+                console.log('💰 Your passive income machine is operational!');
+            </script>
+        </body>
+        </html>
+      `);
+    });
+
     // Start server
     this.server = this.expressApp.listen(PORT, '0.0.0.0', () => {
       console.log(`✅ QUANTUM EMPIRE: Production Dashboard running on port ${PORT}`);
-      console.log(`🌐 Dashboard URL: ${process.env.PORT ? 'https://quantum-yield-empire.onrender.com' : `http://localhost:${PORT}`}`);
+      console.log(`🌐 Dashboard URL: ${process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`}`);
     });
   }
 
@@ -270,16 +441,6 @@ class QuantumEmpireProduction {
           error: error.message
         });
       }
-    });
-
-    // Main dashboard route
-    this.expressApp.get('/', (req, res) => {
-      res.sendFile(path.join(__dirname, 'professional-website', 'index.html'));
-    });
-
-    // Catch-all route
-    this.expressApp.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, 'professional-website', 'index.html'));
     });
   }
 

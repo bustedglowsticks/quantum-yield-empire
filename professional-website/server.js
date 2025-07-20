@@ -1,192 +1,72 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 
-class ProfessionalWebsite {
-    constructor() {
-        this.app = express();
-        this.port = process.env.PORT || 3003;
-        this.subscriptionTiers = {
-            starter: {
-                name: 'Starter',
-                price: 99,
-                period: 'monthly',
-                features: [
-                    'Basic Bot Access',
-                    'Standard APY (280%)',
-                    'Email Support',
-                    'Basic Dashboard',
-                    'Risk Management'
-                ],
-                limits: {
-                    maxCapital: 10000,
-                    transactions: 1000,
-                    support: 'email'
-                }
-            },
-            professional: {
-                name: 'Professional',
-                price: 299,
-                period: 'monthly',
-                features: [
-                    'Advanced Bot Access',
-                    'Enhanced APY (350%)',
-                    'Priority Support',
-                    'Advanced Dashboard',
-                    'AI Optimization',
-                    'Quantum Boost',
-                    'Risk Management Pro'
-                ],
-                limits: {
-                    maxCapital: 100000,
-                    transactions: 10000,
-                    support: 'priority'
-                }
-            },
-            institutional: {
-                name: 'Institutional',
-                price: 999,
-                period: 'monthly',
-                features: [
-                    'Full Beast Mode Access',
-                    'Maximum APY (400%+)',
-                    '24/7 Dedicated Support',
-                    'Institutional Dashboard',
-                    'AI Oracle Pro',
-                    'Quantum Optimization',
-                    'Custom Risk Parameters',
-                    'White Label Solutions',
-                    'API Access',
-                    'Custom Integration'
-                ],
-                limits: {
-                    maxCapital: 1000000,
-                    transactions: 100000,
-                    support: 'dedicated'
-                }
-            },
-            enterprise: {
-                name: 'Enterprise',
-                price: 'Custom',
-                period: 'custom',
-                features: [
-                    'Custom Beast Mode',
-                    'Unlimited APY Potential',
-                    'Dedicated Account Manager',
-                    'Custom Dashboard',
-                    'Full AI Suite',
-                    'Quantum Computing Access',
-                    'Custom Risk Framework',
-                    'White Label Platform',
-                    'Full API Suite',
-                    'Custom Development',
-                    'On-Premise Deployment',
-                    'SLA Guarantees'
-                ],
-                limits: {
-                    maxCapital: 'unlimited',
-                    transactions: 'unlimited',
-                    support: 'dedicated_manager'
-                }
-            }
-        };
-        
-        this.setupMiddleware();
-        this.setupRoutes();
-    }
+console.log('🌐 QUANTUM PROFESSIONAL WEBSITE SERVER STARTING...');
 
-    setupMiddleware() {
-        this.app.use(express.static(path.join(__dirname, 'public')));
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: true }));
-    }
+class ProfessionalWebsiteServer {
+  constructor() {
+    this.app = express();
+    this.PORT = process.env.PORT || 3001;
+  }
 
-    setupRoutes() {
-        // Main pages
-        this.app.get('/', (req, res) => {
-            res.sendFile(path.join(__dirname, 'public', 'index.html'));
-        });
+  initialize() {
+    // Serve static files from professional-website directory
+    this.app.use(express.static(path.join(__dirname)));
+    this.app.use(express.static(path.join(__dirname, '..')));
+    this.app.use(express.json());
 
-        this.app.get('/dashboard', (req, res) => {
-            res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
-        });
+    // Health check endpoint
+    this.app.get('/health', (req, res) => {
+      res.json({ 
+        status: 'healthy', 
+        service: 'Quantum Professional Website',
+        timestamp: new Date() 
+      });
+    });
 
-        this.app.get('/pricing', (req, res) => {
-            res.sendFile(path.join(__dirname, 'public', 'pricing.html'));
-        });
+    // API proxy to main empire (if needed)
+    this.app.get('/api/*', (req, res) => {
+      res.json({
+        message: 'API endpoints available on main empire service',
+        mainEmpireUrl: 'https://quantum-yield-empire.onrender.com',
+        redirect: `https://quantum-yield-empire.onrender.com${req.path}`
+      });
+    });
 
-        this.app.get('/about', (req, res) => {
-            res.sendFile(path.join(__dirname, 'public', 'about.html'));
-        });
-
-        this.app.get('/contact', (req, res) => {
-            res.sendFile(path.join(__dirname, 'public', 'contact.html'));
-        });
-
-        // API endpoints
-        this.app.get('/api/subscription-tiers', (req, res) => {
-            res.json(this.subscriptionTiers);
-        });
-
-        this.app.get('/api/performance', (req, res) => {
-            res.json(this.getPerformanceData());
-        });
-
-        this.app.post('/api/subscribe', (req, res) => {
-            const { tier, email, company } = req.body;
-            console.log(`New subscription request: ${tier} tier for ${email} at ${company}`);
-            
-            // Simulate subscription processing
-            setTimeout(() => {
-                res.json({
-                    success: true,
-                    message: 'Subscription request received. Our team will contact you within 24 hours.',
-                    tier: tier,
-                    reference: `REF-${Date.now()}`
-                });
-            }, 1000);
-        });
-
-        this.app.get('/api/status', (req, res) => {
-            res.json({
-                status: 'operational',
-                uptime: process.uptime(),
-                version: '2.0.0',
-                timestamp: new Date().toISOString()
-            });
-        });
-    }
-
-    getPerformanceData() {
-        return {
-            currentAPY: 350.5,
-            totalYield: 84.800699,
-            winRate: 72.41,
-            riskLevel: 'LOW',
-            optimizationStatus: 'ACTIVE',
-            lastUpdate: new Date().toISOString()
-        };
-    }
-
-    async start() {
-        // Create public directory if it doesn't exist
-        const publicDir = path.join(__dirname, 'public');
-        if (!fs.existsSync(publicDir)) {
-            fs.mkdirSync(publicDir, { recursive: true });
+    // Main route - serve index.html
+    this.app.get('/', (req, res) => {
+      const indexPath = path.join(__dirname, 'index.html');
+      console.log(`📄 Serving index.html from: ${indexPath}`);
+      res.sendFile(indexPath, (err) => {
+        if (err) {
+          console.error('❌ Error serving index.html:', err);
+          res.status(404).send(`
+            <h1>🚀 Quantum Yield Empire Professional Website</h1>
+            <p>Welcome to the Quantum Yield Empire!</p>
+            <p><strong>Main Empire Dashboard:</strong> <a href="https://quantum-yield-empire.onrender.com">Launch Empire</a></p>
+            <p><strong>Testnet Dashboard:</strong> <a href="https://quantum-testnet-dashboard.onrender.com">Testnet</a></p>
+            <p><strong>Mainnet Dashboard:</strong> <a href="https://quantum-mainnet-dashboard.onrender.com">Mainnet</a></p>
+            <style>body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }</style>
+          `);
         }
+      });
+    });
 
-        this.app.listen(this.port, () => {
-            console.log('🔥 PROFESSIONAL WEBSITE LAUNCHED! 🔥');
-            console.log(`🌐 Website running on: http://localhost:${this.port}`);
-            console.log('🏛️ IBM-Style Professional Interface Active!');
-            console.log('💰 Subscription Tiers Ready for Institutional Clients!');
-            console.log('🚀 Ready to dominate the institutional market!');
-        });
-    }
+    // Catch-all route
+    this.app.get('*', (req, res) => {
+      res.redirect('/');
+    });
+
+    // Start server
+    this.app.listen(this.PORT, '0.0.0.0', () => {
+      console.log(`✅ QUANTUM PROFESSIONAL WEBSITE: Running on port ${this.PORT}`);
+      console.log(`🌐 Website URL: ${process.env.RENDER_EXTERNAL_URL || `http://localhost:${this.PORT}`}`);
+    });
+  }
 }
 
-// Start the professional website
-const website = new ProfessionalWebsite();
-website.start().catch(console.error);
+// Start the server
+const server = new ProfessionalWebsiteServer();
+server.initialize();
 
-module.exports = ProfessionalWebsite; 
+module.exports = ProfessionalWebsiteServer; 
