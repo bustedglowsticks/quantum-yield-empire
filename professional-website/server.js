@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-console.log('QUANTUM PROFESSIONAL WEBSITE SERVER STARTING...');
+console.log('AI LEDGER SOLUTIONS PROFESSIONAL WEBSITE SERVER STARTING...');
 
 class ProfessionalWebsiteServer {
   constructor() {
@@ -46,7 +46,7 @@ class ProfessionalWebsiteServer {
     this.app.get('/health', (req, res) => {
       res.json({ 
         status: 'healthy', 
-        service: 'Quantum Professional Website',
+        service: 'AI Ledger Solutions Professional Website',
         timestamp: new Date(),
         stats: this.stats
       });
@@ -420,7 +420,7 @@ class ProfessionalWebsiteServer {
     this.initialize();
     
     this.server = this.app.listen(this.PORT, '0.0.0.0', () => {
-      console.log(`QUANTUM PROFESSIONAL WEBSITE: Running on port ${this.PORT}`);
+      console.log(`AI LEDGER SOLUTIONS PROFESSIONAL WEBSITE: Running on port ${this.PORT}`);
       console.log(`Professional URL: ${process.env.RENDER_EXTERNAL_URL || `http://localhost:${this.PORT}`}`);
       console.log('Features enabled:');
       console.log('   - Pricing calculator');
@@ -462,14 +462,14 @@ class ProfessionalWebsiteServer {
   stop() {
     if (this.server) {
       this.server.close();
-      console.log('QUANTUM PROFESSIONAL WEBSITE: Stopped');
+      console.log('AI LEDGER SOLUTIONS PROFESSIONAL WEBSITE: Stopped');
     }
   }
 }
 
 // Main execution
 async function main() {
-  console.log('QUANTUM PROFESSIONAL WEBSITE - CUSTOMER ACQUISITION PLATFORM');
+  console.log('AI LEDGER SOLUTIONS PROFESSIONAL WEBSITE - CUSTOMER ACQUISITION PLATFORM');
   console.log('Pricing & Information Hub');
   console.log('Lead Generation System');
   console.log('Customer Conversion Engine');
