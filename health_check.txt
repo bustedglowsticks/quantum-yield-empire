@@ -1,0 +1,1 @@
+{"status":"healthy","service":"Quantum Professional Website","timestamp":"2025-07-20T17:14:56.199Z","stats":{"totalVisitors":4,"conversions":0,"totalValueManaged":2402530.1267769523,"activeUsers":1248,"averageAPY":34.29968804300655,"uptime":99.2}}

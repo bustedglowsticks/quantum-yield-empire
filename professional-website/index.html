@@ -3,881 +3,575 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 Quantum Yield Empire - Ultimate DeFi Passive Income Platform</title>
-    <meta name="description" content="Generate 35%+ APY with our AI-powered automated trading empire. Start earning passive income with advanced DeFi strategies on XRPL.">
-    <meta name="keywords" content="DeFi, passive income, automated trading, XRPL, cryptocurrency, yield farming, APY">
-    
+    <title>Quantum Yield Empire - Professional Financial Intelligence Platform</title>
+    <meta name="description" content="AI-powered DeFi trading platform. Generate 35%+ APY with advanced algorithms, institutional-grade security, and automated portfolio management.">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            overflow-x: hidden;
+            color: #1e293b;
+            background: #ffffff;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header & Navigation */
+        
         .header {
-            background: rgba(0,0,0,0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
-            transition: all 0.3s ease;
+            padding: 0.75rem 0;
         }
-
+        
         .nav {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
+            padding: 0 2rem;
         }
-
+        
         .logo {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #00ff88;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #1e293b;
             text-decoration: none;
         }
-
+        
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
         }
-
+        
         .nav-links a {
-            color: white;
+            color: #64748b;
             text-decoration: none;
-            transition: color 0.3s ease;
             font-weight: 500;
+            transition: color 0.3s ease;
         }
-
+        
         .nav-links a:hover {
-            color: #00ff88;
+            color: #3b82f6;
         }
-
+        
         .cta-btn {
-            background: linear-gradient(45deg, #00ff88, #00d2ff);
+            background: #3b82f6;
             color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,255,136,0.3);
+            font-weight: 600;
+            transition: background 0.3s ease;
         }
-
+        
         .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,255,136,0.4);
+            background: #2563eb;
         }
-
-        /* Hero Section */
+        
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 1.5rem 2rem 1.5rem;
+            margin-top: 4rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             text-align: center;
-            color: white;
-            position: relative;
-            overflow: hidden;
         }
-
+        
         .hero-content {
-            z-index: 2;
-            max-width: 800px;
-        }
-
-        .hero h1 {
-            font-size: 3.5em;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            background: linear-gradient(45deg, #00ff88, #00d2ff, #ff6b6b);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientAnimation 3s ease infinite;
-        }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .hero-subtitle {
-            font-size: 1.4em;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .apy-showcase {
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 40px 0;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .apy-number {
-            font-size: 4em;
-            font-weight: bold;
-            color: #00ff88;
-            margin-bottom: 10px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, #00ff88, #00d2ff);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,255,136,0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        .btn-primary:hover, .btn-secondary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,255,136,0.4);
-        }
-
-        /* Features Section */
-        .features {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #00ff88;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2em;
-            margin-bottom: 60px;
-            opacity: 0.8;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .feature-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .feature-icon {
-            font-size: 3em;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .feature-title {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            color: #00ff88;
-        }
-
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #232526 0%, #414345 100%);
-            color: white;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .pricing-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 25px;
-            padding: 50px 40px;
-            text-align: center;
-            position: relative;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .pricing-card.featured {
-            border: 2px solid #00ff88;
-            transform: scale(1.05);
-            background: rgba(0,255,136,0.1);
-        }
-
-        .pricing-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .plan-name {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-            color: #00ff88;
-        }
-
-        .plan-price {
-            font-size: 3em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .plan-period {
-            opacity: 0.7;
-            margin-bottom: 30px;
-        }
-
-        .plan-features {
-            list-style: none;
-            margin-bottom: 40px;
-        }
-
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .plan-features li:before {
-            content: "✅ ";
-            color: #00ff88;
-            font-weight: bold;
-        }
-
-        .popular-badge {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(45deg, #ff6b6b, #ffa500);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: bold;
-            color: white;
-        }
-
-        /* Stats Section */
-        .stats {
-            padding: 100px 0;
-            background: rgba(0,0,0,0.8);
-            color: white;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3em;
-            font-weight: bold;
-            color: #00ff88;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1.2em;
-            opacity: 0.8;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .testimonial-card {
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .testimonial-content {
-            font-style: italic;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-
-        .testimonial-author {
-            font-weight: bold;
-            color: #00ff88;
-        }
-
-        .testimonial-role {
-            opacity: 0.7;
-            font-size: 0.9em;
-        }
-
-        /* FAQ Section */
-        .faq {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-        }
-
-        .faq-container {
             max-width: 800px;
             margin: 0 auto;
         }
-
-        .faq-item {
-            margin-bottom: 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 15px;
-            overflow: hidden;
+        
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #1e293b;
         }
-
-        .faq-question {
-            padding: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            background: rgba(255,255,255,0.05);
-            transition: background 0.3s ease;
+        
+        .hero-subtitle {
+            font-size: 1.1em;
+            color: #64748b;
+            margin-bottom: 2rem;
         }
-
-        .faq-question:hover {
-            background: rgba(255,255,255,0.1);
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
         }
-
-        .faq-answer {
-            padding: 20px;
-            display: none;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(0,0,0,0.9);
+        
+        .btn-primary {
+            background: #3b82f6;
             color: white;
-            padding: 60px 0 30px;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
-
+        
+        .btn-secondary {
+            background: white;
+            color: #1e293b;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+        
+        .section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #1e293b;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5em;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .feature-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        
+        .feature-description {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border-color: #3b82f6;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .plan-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .plan-price {
+            font-size: 3em;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .plan-period {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .plan-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-features li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .performance-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        
+        .performance-value {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .performance-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .risk-warning {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .risk-warning-title {
+            font-weight: bold;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            font-size: 1.1em;
+        }
+        
+        .risk-warning-text {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background: #f1f5f9;
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+        
         .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            gap: 2rem;
         }
-
+        
         .footer-section h3 {
-            color: #00ff88;
-            margin-bottom: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
         }
-
+        
         .footer-links {
             list-style: none;
         }
-
+        
         .footer-links li {
-            margin-bottom: 10px;
+            margin-bottom: 0.5rem;
         }
-
+        
         .footer-links a {
-            color: white;
+            color: #64748b;
             text-decoration: none;
             transition: color 0.3s ease;
         }
-
+        
         .footer-links a:hover {
-            color: #00ff88;
+            color: #3b82f6;
         }
-
+        
         .footer-bottom {
             text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            opacity: 0.7;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #cbd5e1;
+            color: #94a3b8;
         }
-
-        /* Responsive Design */
+        
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5em;
-            }
-
             .nav-links {
                 display: none;
             }
-
+            
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-
+            
             .pricing-card.featured {
                 transform: none;
             }
         }
-
-        /* Animations */
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* Risk Warning */
-        .risk-warning {
-            background: rgba(255,165,0,0.1);
-            border: 1px solid #ffa500;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 40px 0;
-            text-align: center;
-        }
-
-        .risk-warning-title {
-            color: #ffa500;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <a href="#" class="logo">🚀 Quantum Yield Empire</a>
+            <a href="#" class="logo">Quantum Yield Empire</a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#stats">Performance</a></li>
-                <li><a href="#testimonials">Reviews</a></li>
-                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#performance">Performance</a></li>
             </ul>
-            <a href="#pricing" class="cta-btn">Start Earning Now</a>
+            <a href="#pricing" class="cta-btn">Get Started</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>🚀 Generate Passive Income with AI-Powered DeFi</h1>
-                <p class="hero-subtitle">
-                    Join thousands earning consistent returns with our automated trading empire. 
-                    Advanced algorithms, zero effort required.
-                </p>
-                
-                <div class="apy-showcase floating">
-                    <div class="apy-number">35%+</div>
-                    <div>Average Annual Percentage Yield</div>
-                    <div style="margin-top: 15px; opacity: 0.8;">
-                        🤖 AI-Optimized • 🔒 Risk-Managed • 📈 Fully Automated
-                    </div>
-                </div>
-
-                <div class="hero-buttons">
-                    <a href="https://quantum-yield-empire.onrender.com" class="btn-primary pulse">
-                        🚀 Launch Empire Dashboard
-                    </a>
-                    <a href="#features" class="btn-secondary">
-                        📊 Learn More
-                    </a>
-                </div>
-
-                <div class="risk-warning">
-                    <div class="risk-warning-title">⚠️ Risk Disclosure</div>
-                    <div style="font-size: 0.9em;">
-                        All investments carry risk. Past performance does not guarantee future results. 
-                        Only invest what you can afford to lose.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">🔥 Why Choose Quantum Yield Empire?</h2>
-            <p class="section-subtitle">
-                Advanced DeFi strategies powered by artificial intelligence and quantum-inspired algorithms
+        <div class="hero-content">
+            <h1>Professional AI Financial Intelligence</h1>
+            <p class="hero-subtitle">
+                Advanced AI-powered trading algorithms generate consistent returns with institutional-grade security and risk management.
             </p>
+            
+            <div class="hero-buttons">
+                <a href="https://quantum-yield-empire.onrender.com" class="btn-primary">
+                    Launch Platform
+                </a>
+                <a href="#features" class="btn-secondary">
+                    Learn More
+                </a>
+            </div>
 
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">🤖</span>
-                    <h3 class="feature-title">AI-Powered Trading</h3>
-                    <p>Advanced machine learning algorithms analyze market patterns 24/7, executing optimal trades automatically.</p>
-                </div>
-
-                <div class="feature-card">
-                    <span class="feature-icon">🛡️</span>
-                    <h3 class="feature-title">Risk Management</h3>
-                    <p>Multi-layer protection with circuit breakers, clawback detection, and dynamic risk adjustment.</p>
-                </div>
-
-                <div class="feature-card">
-                    <span class="feature-icon">⚡</span>
-                    <h3 class="feature-title">Lightning Fast Execution</h3>
-                    <p>Sub-second trade execution on XRPL network ensures you never miss profitable opportunities.</p>
-                </div>
-
-                <div class="feature-card">
-                    <span class="feature-icon">📈</span>
-                    <h3 class="feature-title">Diversified Strategies</h3>
-                    <p>Multiple trading strategies including arbitrage, yield farming, and momentum trading for stable returns.</p>
-                </div>
-
-                <div class="feature-card">
-                    <span class="feature-icon">🌐</span>
-                    <h3 class="feature-title">Multi-Chain Support</h3>
-                    <p>Access opportunities across multiple blockchains with automated bridge transactions.</p>
-                </div>
-
-                <div class="feature-card">
-                    <span class="feature-icon">📊</span>
-                    <h3 class="feature-title">Real-Time Analytics</h3>
-                    <p>Professional-grade dashboards with comprehensive performance metrics and insights.</p>
+            <div class="risk-warning">
+                <div class="risk-warning-title">Investment Risk Disclosure</div>
+                <div class="risk-warning-text">
+                    All investments involve risk. AI trading involves substantial risk of loss. Only invest capital you can afford to lose. Past performance does not guarantee future results.
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2 class="section-title">💰 Choose Your Empire Tier</h2>
-            <p class="section-subtitle">
-                Start with any amount and scale up as your empire grows
-            </p>
-
-            <div class="pricing-grid">
-                <!-- Starter Tier -->
-                <div class="pricing-card">
-                    <h3 class="plan-name">🌱 Starter Empire</h3>
-                    <div class="plan-price">$100</div>
-                    <div class="plan-period">Minimum Investment</div>
-                    <ul class="plan-features">
-                        <li>Basic AI Trading Strategies</li>
-                        <li>Standard Risk Management</li>
-                        <li>Mobile Dashboard Access</li>
-                        <li>Email Support</li>
-                        <li>Weekly Performance Reports</li>
-                        <li>Community Access</li>
-                    </ul>
-                    <a href="https://quantum-yield-empire.onrender.com" class="btn-primary">Start Building</a>
-                </div>
-
-                <!-- Professional Tier -->
-                <div class="pricing-card featured">
-                    <div class="popular-badge">🔥 Most Popular</div>
-                    <h3 class="plan-name">🚀 Professional Empire</h3>
-                    <div class="plan-price">$1,000</div>
-                    <div class="plan-period">Minimum Investment</div>
-                    <ul class="plan-features">
-                        <li>Advanced AI + Quantum Optimization</li>
-                        <li>Premium Risk Management</li>
-                        <li>Professional Dashboard Suite</li>
-                        <li>Priority Support</li>
-                        <li>Daily Performance Reports</li>
-                        <li>VIP Community Access</li>
-                        <li>Custom Strategy Allocation</li>
-                        <li>API Access</li>
-                    </ul>
-                    <a href="https://quantum-yield-empire.onrender.com" class="btn-primary">Launch Empire</a>
-                </div>
-
-                <!-- Institutional Tier -->
-                <div class="pricing-card">
-                    <h3 class="plan-name">🏛️ Institutional Empire</h3>
-                    <div class="plan-price">$10,000</div>
-                    <div class="plan-period">Minimum Investment</div>
-                    <ul class="plan-features">
-                        <li>Beast Mode AI Strategies</li>
-                        <li>Maximum Risk Protection</li>
-                        <li>Elite Command Center</li>
-                        <li>Dedicated Account Manager</li>
-                        <li>Real-time Performance Monitoring</li>
-                        <li>Private Investment Group</li>
-                        <li>Custom Strategy Development</li>
-                        <li>White-label Solutions</li>
-                        <li>Multi-chain Arbitrage</li>
-                    </ul>
-                    <a href="https://quantum-yield-empire.onrender.com" class="btn-primary">Dominate Markets</a>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 60px;">
-                <p style="font-size: 1.2em; margin-bottom: 20px;">
-                    💎 <strong>No Hidden Fees</strong> • 🔒 <strong>Secure Custody</strong> • 📞 <strong>24/7 Support</strong>
+    <section class="section" id="features">
+        <h2 class="section-title">AI-Powered Trading Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">AI</div>
+                <h3 class="feature-title">Intelligent Trading Algorithms</h3>
+                <p class="feature-description">
+                    Advanced machine learning models analyze market patterns and execute optimal trades automatically, maximizing returns while minimizing risk.
                 </p>
-                <p style="opacity: 0.8;">
-                    All tiers include our standard 2.5% performance fee only on profits. No monthly subscriptions.
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">RM</div>
+                <h3 class="feature-title">Multi-Asset Diversification</h3>
+                <p class="feature-description">
+                    Spread investments across multiple cryptocurrencies and DeFi protocols to reduce portfolio risk and maximize yield opportunities.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">PA</div>
+                <h3 class="feature-title">Real-Time Analytics</h3>
+                <p class="feature-description">
+                    Monitor your portfolio performance, risk metrics, and market opportunities through comprehensive dashboards and real-time alerts.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats" id="stats">
-        <div class="container">
-            <h2 class="section-title">📊 Empire Performance Metrics</h2>
-            <div class="stats-grid">
-                <div>
-                    <div class="stat-number">$2.4M+</div>
-                    <div class="stat-label">Total Value Managed</div>
-                </div>
-                <div>
-                    <div class="stat-number">1,247</div>
-                    <div class="stat-label">Active Empire Builders</div>
-                </div>
-                <div>
-                    <div class="stat-number">35.7%</div>
-                    <div class="stat-label">Average APY Last 12 Months</div>
-                </div>
-                <div>
-                    <div class="stat-number">99.2%</div>
-                    <div class="stat-label">Uptime & Reliability</div>
-                </div>
+    <section class="section" id="pricing">
+        <h2 class="section-title">Investment Tiers</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3 class="plan-name">Starter Intelligence</h3>
+                <div class="plan-price">$1,000</div>
+                <div class="plan-period">Minimum Investment</div>
+                <ul class="plan-features">
+                    <li>AI-powered portfolio management</li>
+                    <li>Basic risk assessment</li>
+                    <li>Real-time monitoring</li>
+                    <li>Mobile dashboard</li>
+                    <li>Email support</li>
+                </ul>
+                <a href="https://quantum-yield-empire.onrender.com" class="btn-primary">Get Started</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <h3 class="plan-name">Professional AI</h3>
+                <div class="plan-price">$10,000</div>
+                <div class="plan-period">Minimum Investment</div>
+                <ul class="plan-features">
+                    <li>Advanced ML strategies</li>
+                    <li>Multi-asset arbitrage</li>
+                    <li>Custom strategy development</li>
+                    <li>Priority support</li>
+                    <li>API access</li>
+                    <li>Advanced analytics</li>
+                </ul>
+                <a href="https://quantum-yield-empire.onrender.com" class="btn-primary">Launch Platform</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3 class="plan-name">Institutional Elite</h3>
+                <div class="plan-price">$100,000</div>
+                <div class="plan-period">Minimum Investment</div>
+                <ul class="plan-features">
+                    <li>Enterprise infrastructure</li>
+                    <li>Dedicated research team</li>
+                    <li>White-label access</li>
+                    <li>24/7 account management</li>
+                    <li>Regulatory compliance</li>
+                    <li>Custom integrations</li>
+                </ul>
+                <a href="https://quantum-yield-empire.onrender.com" class="btn-primary">Contact Sales</a>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <h2 class="section-title">💬 What Empire Builders Say</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        "I started with $500 six months ago and I'm now earning $150+ monthly in passive income. 
-                        The AI really does work - it's found opportunities I never would have seen myself."
-                    </div>
-                    <div class="testimonial-author">Sarah Chen</div>
-                    <div class="testimonial-role">Professional Empire Builder</div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        "As a busy entrepreneur, I needed something completely automated. Quantum Yield Empire 
-                        has been generating consistent returns while I focus on my business. Best passive income I've found."
-                    </div>
-                    <div class="testimonial-author">Michael Rodriguez</div>
-                    <div class="testimonial-role">Startup Founder</div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        "The risk management is what sold me. I've tried other DeFi platforms but they were too volatile. 
-                        This platform actually protects my capital while generating solid returns."
-                    </div>
-                    <div class="testimonial-author">Jennifer Kim</div>
-                    <div class="testimonial-role">Institutional Investor</div>
-                </div>
+    <section class="section" id="performance">
+        <h2 class="section-title">Performance Metrics</h2>
+        <div class="performance-grid">
+            <div class="performance-card">
+                <div class="performance-value">35.7%</div>
+                <div class="performance-label">Average APY</div>
+            </div>
+            <div class="performance-card">
+                <div class="performance-value">$2.4M+</div>
+                <div class="performance-label">Assets Under Management</div>
+            </div>
+            <div class="performance-card">
+                <div class="performance-value">99.2%</div>
+                <div class="performance-label">Uptime</div>
+            </div>
+            <div class="performance-card">
+                <div class="performance-value">1,247</div>
+                <div class="performance-label">Active Users</div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <h2 class="section-title">🤔 Frequently Asked Questions</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        How does the AI trading system work?
-                    </div>
-                    <div class="faq-answer">
-                        Our AI system uses advanced machine learning algorithms to analyze market patterns, 
-                        sentiment data, and on-chain metrics across multiple timeframes. It automatically 
-                        executes trades based on probability models and risk-adjusted return calculations.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        What's the minimum investment to start?
-                    </div>
-                    <div class="faq-answer">
-                        You can start with as little as $100 in our Starter Empire tier. However, we recommend 
-                        at least $1,000 for the Professional tier to access advanced strategies and better returns.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        How are my funds protected?
-                    </div>
-                    <div class="faq-answer">
-                        We use multiple security layers including: non-custodial wallet architecture, 
-                        circuit breakers to prevent large losses, diversified strategy allocation, 
-                        and continuous monitoring with automatic risk adjustment.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        Can I withdraw my funds anytime?
-                    </div>
-                    <div class="faq-answer">
-                        Yes, you maintain full control of your wallet and can withdraw funds at any time. 
-                        Standard withdrawals are processed within 24 hours.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        What fees do you charge?
-                    </div>
-                    <div class="faq-answer">
-                        We charge a performance fee of 2.5% only on profits generated. There are no monthly 
-                        subscription fees, no deposit fees, and no withdrawal fees. You only pay when you profit.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        Is this suitable for beginners?
-                    </div>
-                    <div class="faq-answer">
-                        Absolutely! The system is fully automated, so no trading experience is required. 
-                        We provide educational resources and our support team helps you get started.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>🚀 Quantum Yield Empire</h3>
-                    <p>The future of passive income is here. Join the revolution of AI-powered DeFi trading.</p>
-                    <div style="margin-top: 20px;">
-                        <a href="https://quantum-yield-empire.onrender.com" class="btn-primary">
-                            Launch Your Empire
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Platform</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://quantum-yield-empire.onrender.com">Empire Dashboard</a></li>
-                        <li><a href="https://quantum-testnet-dashboard.onrender.com">Testnet Demo</a></li>
-                        <li><a href="https://quantum-mainnet-dashboard.onrender.com">Performance Monitor</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Support</h3>
-                    <ul class="footer-links">
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="mailto:support@quantumyieldempire.com">Email Support</a></li>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">API Guide</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Risk Disclosure</a></li>
-                        <li><a href="#">Compliance</a></li>
-                    </ul>
-                </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quantum Yield Empire</h3>
+                <p style="color: #64748b; margin-bottom: 1rem;">
+                    Professional AI-powered financial intelligence platform for institutional and retail investors.
+                </p>
+                <a href="https://quantum-yield-empire.onrender.com" class="btn-primary">
+                    Launch Platform
+                </a>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2024 Quantum Yield Empire. All rights reserved. 
-                   | ⚠️ High-risk investment. Only invest what you can afford to lose.</p>
+            <div class="footer-section">
+                <h3>Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="https://quantum-yield-empire.onrender.com">Trading Dashboard</a></li>
+                    <li><a href="https://quantum-testnet-dashboard.onrender.com">Demo Environment</a></li>
+                    <li><a href="https://quantum-mainnet-dashboard.onrender.com">Analytics</a></li>
+                    <li><a href="#pricing">Investment Plans</a></li>
+                </ul>
             </div>
+
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#features">AI Features</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                    <li><a href="mailto:support@quantumyieldempire.com">Support</a></li>
+                    <li><a href="#">Documentation</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Risk Disclosure</a></li>
+                    <li><a href="#">Compliance</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Quantum Yield Empire. All rights reserved. Investment involves risk. Only invest what you can afford to lose.</p>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -891,70 +585,29 @@
             });
         });
 
-        // FAQ Toggle functionality
-        function toggleFAQ(element) {
-            const answer = element.nextElementSibling;
-            const isOpen = answer.style.display === 'block';
-            
-            // Close all other FAQs
-            document.querySelectorAll('.faq-answer').forEach(faq => {
-                faq.style.display = 'none';
-            });
-            
-            // Toggle current FAQ
-            answer.style.display = isOpen ? 'none' : 'block';
-        }
-
-        // Header background on scroll
+        // Header scroll effect
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
             if (window.scrollY > 100) {
-                header.style.background = 'rgba(0,0,0,0.95)';
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
             } else {
-                header.style.background = 'rgba(0,0,0,0.9)';
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
             }
-        });
-
-        // Add entrance animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animation
-        document.querySelectorAll('.feature-card, .pricing-card, .testimonial-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
         });
 
         // Console branding
         console.log(`
-🚀 QUANTUM YIELD EMPIRE - PROFESSIONAL WEBSITE
-============================================
-💰 Generate passive income with AI-powered DeFi trading
-📊 Advanced algorithms, zero effort required
-🔒 Risk-managed, fully automated
+QUANTUM YIELD EMPIRE - PROFESSIONAL FINANCIAL INTELLIGENCE
+=========================================================
+Advanced machine learning algorithms
+Real-time market analysis  
+Institutional-grade security
+Professional investment platform
 
-Ready to build your empire? https://quantum-yield-empire.onrender.com
+Ready to optimize your portfolio? https://quantum-yield-empire.onrender.com
         `);
-
-        // Performance tracking
-        console.log('🎯 Website Performance:', {
-            loadTime: performance.now(),
-            userAgent: navigator.userAgent,
-            timestamp: new Date()
-        });
     </script>
 </body>
 </html> 
