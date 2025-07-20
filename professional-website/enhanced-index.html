@@ -267,7 +267,7 @@
 
         /* AI Dashboard Section inspired by GoodData */
         .ai-dashboard {
-            padding: 6rem 2rem;
+            padding: 3rem 2rem;
             background: var(--primary-bg);
             max-width: 1400px;
             margin: 0 auto;
@@ -275,7 +275,7 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 2.5rem;
         }
 
         .section-title {
@@ -302,24 +302,24 @@
 
         .chart-container {
             background: white;
-            border-radius: 16px;
-            padding: 2rem;
+            border-radius: 12px;
+            padding: 1rem;
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-light);
         }
 
         .chart-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             border-bottom: 1px solid var(--border-light);
-            padding-bottom: 1rem;
+            padding-bottom: 0.75rem;
         }
 
         .chart-title {
             font-family: var(--font-display);
-            font-size: 1.5em;
+            font-size: 1.2em;
             font-weight: 600;
             color: var(--text-primary);
         }
@@ -819,7 +819,7 @@
                         <button class="chart-control" data-period="1y">1Y</button>
                     </div>
                 </div>
-                <canvas id="portfolioChart" width="400" height="200"></canvas>
+                <canvas id="portfolioChart" width="300" height="120"></canvas>
             </div>
 
             <div class="kpi-grid">
@@ -841,7 +841,7 @@
             </div>
         </div>
 
-        <div class="chart-container fade-in" style="margin-top: 2rem;">
+        <div class="chart-container fade-in" style="margin-top: 1.5rem;">
             <div class="chart-header">
                 <h3 class="chart-title">AI Strategy Allocation</h3>
                 <div class="chart-controls">
@@ -849,7 +849,7 @@
                     <button class="chart-control">Projected</button>
                 </div>
             </div>
-            <canvas id="allocationChart" width="400" height="150"></canvas>
+            <canvas id="allocationChart" width="300" height="100"></canvas>
         </div>
     </section>
 
@@ -1005,7 +1005,7 @@
                 </ul>
             </div>
             <div class="analytics-visual fade-in">
-                <canvas id="analyticsChart" width="400" height="300"></canvas>
+                <canvas id="analyticsChart" width="300" height="180"></canvas>
             </div>
         </div>
     </section>
