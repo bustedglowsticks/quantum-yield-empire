@@ -1,5 +1,5 @@
 const NetworkConnector = require('./src/network-connector');
-const tf = require('@tensorflow/tfjs-node');
+// const tf = require('@tensorflow/tfjs-node'); // Temporarily disabled due to installation issues
 
 console.log('🔥 BEAST MODE NETWORK LAUNCHER - REAL NETWORK CONNECTIVITY! 🔥');
 

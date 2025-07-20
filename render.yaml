@@ -35,10 +35,12 @@ services:
     name: quantum-mainnet-bot
     runtime: node
     buildCommand: npm install
-    startCommand: node beast-mode-network-launcher.js mainnet
+    startCommand: node beast-mode-network-launcher.js
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NETWORK
+        value: mainnet
       - key: WALLET_SEED
         sync: false  # Set this securely in Render dashboard
     autoDeploy: true
