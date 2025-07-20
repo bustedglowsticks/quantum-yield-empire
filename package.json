@@ -1,31 +1,54 @@
 {
-  "name": "quantum-yield-empire",
-  "version": "1.0.0",
-  "description": "Quantum Yield Empire - Advanced XRPL DeFi Bot with Multi-Bot Architecture",
-  "main": "quantum-empire-production.js",
+  "name": "ai-ledger-solutions",
+  "version": "2.0.0",
+  "description": "AI Ledger Solutions - Advanced XRPL Financial Intelligence Platform with Institutional-Grade Trading",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node quantum-empire-production.js",
-    "start:simple": "node quantum-empire-launcher-simple.js",
-    "start:beast": "node beast-mode-network-launcher.js",
-    "start:testnet": "node simple-testnet-dashboard.js",
-    "start:mainnet": "node mainnet-dashboard.js",
-    "dev": "NODE_ENV=development node quantum-empire-production.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/",
+    "clean": "rm -rf node_modules package-lock.json",
+    "docker:build": "docker build -t ai-ledger-solutions .",
+    "docker:run": "docker run -p 3000:3000 ai-ledger-solutions",
+    "deploy": "node deploy-now.js",
+    "monitor": "node monitor-empire.js"
   },
-  "dependencies": {
-    "axios": "^0.27.2",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "html2canvas": "^1.4.1",
-    "redis": "^4.2.0",
-    "uuid": "^8.3.2",
-    "ws": "^8.8.0",
-    "xrpl": "^2.7.0"
-  },
-  "keywords": ["xrpl", "defi", "bot", "quantum", "yield", "arbitrage", "ai", "multi-bot"],
-  "author": "Quantum Yield Empire",
+  "keywords": [
+    "xrpl",
+    "defi",
+    "ai",
+    "trading",
+    "ledger",
+    "financial-intelligence",
+    "institutional",
+    "yield-optimization",
+    "machine-learning"
+  ],
+  "author": "AI Ledger Solutions",
   "license": "MIT",
+  "dependencies": {
+    "xrpl": "^2.7.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "compression": "^1.7.4",
+    "morgan": "^1.10.0",
+    "dotenv": "^16.0.3",
+    "config": "^3.3.9",
+    "winston": "^3.8.2",
+    "axios": "^1.4.0",
+    "ws": "^8.13.0",
+    "node-cron": "^3.0.2"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "eslint": "^8.41.0",
+    "nodemon": "^2.0.22"
+  },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   }
 }

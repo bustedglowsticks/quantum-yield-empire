@@ -255,9 +255,9 @@ class ProfessionalWebsiteServer {
     // API proxy to main empire services
     this.app.get('/api/empire/*', (req, res) => {
       res.json({
-        message: 'Empire API endpoints available on main service',
-        mainEmpireUrl: 'https://quantum-yield-empire.onrender.com',
-        redirect: `https://quantum-yield-empire.onrender.com${req.path}`
+        message: 'AI Ledger Solutions API endpoints available on main service',
+        mainServiceUrl: 'https://ai-ledger-solutions.onrender.com',
+        redirect: `https://ai-ledger-solutions.onrender.com${req.path}`
       });
     });
 

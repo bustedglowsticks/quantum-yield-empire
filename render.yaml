@@ -1,76 +1,47 @@
+# AI Ledger Solutions - Production Version
 services:
-  # Main Quantum Yield Empire - Production Version
-  - type: web
-    name: quantum-yield-empire
-    runtime: node
-    plan: starter
-    buildCommand: npm install
-    startCommand: node quantum-empire-production.js
-    envVars:
-      - key: NETWORK
-        value: mainnet
-      - key: NODE_ENV
-        value: production
-      - key: WALLET_SEED
-        sync: false  # Set this in Render dashboard for security
-    healthCheckPath: /health
+- name: ai-ledger-solutions
+  type: web
+  runtime: node
+  plan: starter
+  buildCommand: npm install
+  startCommand: npm start
+  envVars:
+  - key: NODE_ENV
+    value: production
+  - key: XRPL_NETWORK
+    value: mainnet
+  - key: XRPL_WALLET_SEED
+    sync: false
+  - key: XRPL_WALLET_ADDRESS  
+    sync: false
+  - key: PORT
+    value: 10000
 
-  # Professional Website & Dashboard
-  - type: web
-    name: quantum-professional-website
-    runtime: node
-    plan: starter
-    buildCommand: npm install
-    startCommand: node professional-website/server.js
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 3001
+- name: ai-ledger-testnet-dashboard
+  type: web
+  runtime: node
+  plan: starter
+  buildCommand: npm install
+  startCommand: node simple-testnet-dashboard.js
+  envVars:
+  - key: NODE_ENV
+    value: development
+  - key: XRPL_NETWORK
+    value: testnet
+  - key: PORT
+    value: 10000
 
-  # Testnet Dashboard for Development
-  - type: web
-    name: quantum-testnet-dashboard
-    runtime: node
-    plan: starter
-    buildCommand: npm install
-    startCommand: node simple-testnet-dashboard.js
-    envVars:
-      - key: NETWORK
-        value: testnet
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 3002
-
-  # Mainnet Performance Dashboard
-  - type: web
-    name: quantum-mainnet-dashboard
-    runtime: node
-    plan: starter
-    buildCommand: npm install
-    startCommand: node mainnet-dashboard.js
-    envVars:
-      - key: NETWORK
-        value: mainnet
-      - key: NODE_ENV
-        value: production
-      - key: PORT
-        value: 3003
-      - key: WALLET_SEED
-        sync: false  # Set this in Render dashboard for security
-
-  # Background Worker for Beast Mode Bot
-  - type: worker
-    name: quantum-beast-mode-worker
-    runtime: node
-    plan: starter
-    buildCommand: npm install
-    startCommand: node beast-mode-network-launcher.js mainnet
-    envVars:
-      - key: NETWORK
-        value: mainnet
-      - key: NODE_ENV
-        value: production
-      - key: WALLET_SEED
-        sync: false  # Set this in Render dashboard for security
+- name: ai-ledger-mainnet-dashboard
+  type: web
+  runtime: node
+  plan: starter
+  buildCommand: npm install
+  startCommand: node mainnet-dashboard.js
+  envVars:
+  - key: NODE_ENV
+    value: production
+  - key: XRPL_NETWORK
+    value: mainnet
+  - key: PORT
+    value: 10000
