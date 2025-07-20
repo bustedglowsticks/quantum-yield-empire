@@ -289,45 +289,112 @@ class ProfessionalWebsiteServer {
 
     // Main route - serve enhanced index.html
     this.app.get('/', (req, res) => {
-      const indexPath = path.join(__dirname, 'index.html');
-      console.log(`📄 Serving enhanced professional website from: ${indexPath}`);
+      // Check if enhanced version is requested
+      const useEnhanced = req.query.design === 'enhanced' || process.env.USE_ENHANCED_DESIGN === 'true';
+      const indexPath = useEnhanced 
+        ? path.join(__dirname, 'enhanced-index.html')
+        : path.join(__dirname, 'index.html');
+      
+      console.log(`📄 Serving ${useEnhanced ? 'ENHANCED' : 'standard'} professional website from: ${indexPath}`);
+      
       res.sendFile(indexPath, (err) => {
         if (err) {
           console.error('❌ Error serving index.html:', err);
           res.status(404).send(`
-            <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; text-align: center;">
-              <h1>🚀 Quantum Yield Empire Professional Website</h1>
-              <p style="font-size: 1.2em; margin: 30px 0;">Welcome to the ultimate DeFi passive income platform!</p>
+            <div style="font-family: 'Inter', Arial, sans-serif; max-width: 1200px; margin: 50px auto; padding: 40px; text-align: center; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 20px;">
+              <h1 style="color: #1e293b; font-size: 2.5em; margin-bottom: 20px;">🚀 Quantum Yield Empire</h1>
+              <h2 style="color: #3b82f6; font-size: 1.8em; margin-bottom: 30px;">AI-Powered Financial Intelligence Platform</h2>
               
-              <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 20px; color: white; margin: 40px 0;">
-                <h2>🔥 Generate 35%+ APY with AI-Powered Trading</h2>
-                <p>Advanced algorithms, zero effort required</p>
+              <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin: 40px 0;">
+                <h3 style="color: #10b981; font-size: 1.5em; margin-bottom: 20px;">🔥 Generate 35%+ APY with Advanced AI</h3>
+                <p style="color: #64748b; font-size: 1.1em; margin-bottom: 30px;">Institutional-grade algorithms, real-time market analysis, zero effort required</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
+                  <a href="https://quantum-yield-empire.onrender.com" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 20px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: transform 0.3s;">
+                    🚀 Launch AI Platform
+                  </a>
+                  <a href="https://quantum-testnet-dashboard.onrender.com" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 20px; border-radius: 12px; text-decoration: none; font-weight: 600;">
+                    🧪 Demo Environment
+                  </a>
+                  <a href="https://quantum-mainnet-dashboard.onrender.com" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; padding: 20px; border-radius: 12px; text-decoration: none; font-weight: 600;">
+                    📊 Analytics Suite
+                  </a>
+                </div>
               </div>
 
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0;">
-                <a href="https://quantum-yield-empire.onrender.com" style="background: #00ff88; color: black; padding: 20px; border-radius: 15px; text-decoration: none; font-weight: bold;">
-                  🚀 Launch Empire
-                </a>
-                <a href="https://quantum-testnet-dashboard.onrender.com" style="background: #00d2ff; color: black; padding: 20px; border-radius: 15px; text-decoration: none; font-weight: bold;">
-                  🧪 Try Testnet
-                </a>
-                <a href="https://quantum-mainnet-dashboard.onrender.com" style="background: #ff6b6b; color: white; padding: 20px; border-radius: 15px; text-decoration: none; font-weight: bold;">
-                  📊 View Performance
-                </a>
+              <div style="background: rgba(59, 130, 246, 0.1); padding: 30px; border-radius: 15px; margin: 40px 0; border: 1px solid #3b82f6;">
+                <h3 style="color: #1e293b; margin-bottom: 20px;">💰 Investment Intelligence Tiers</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                  <div style="text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #3b82f6;">$1,000+</div>
+                    <div style="color: #64748b;">Starter Intelligence</div>
+                  </div>
+                  <div style="text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #10b981;">$10,000+</div>
+                    <div style="color: #64748b;">Professional AI (Popular)</div>
+                  </div>
+                  <div style="text-align: center;">
+                    <div style="font-size: 1.5em; font-weight: bold; color: #8b5cf6;">$100,000+</div>
+                    <div style="color: #64748b;">Institutional Elite</div>
+                  </div>
+                </div>
               </div>
 
-              <div style="background: rgba(0,0,0,0.1); padding: 30px; border-radius: 15px; margin: 40px 0;">
-                <h3>💰 Investment Tiers</h3>
-                <p><strong>🌱 Starter:</strong> $100+ minimum</p>
-                <p><strong>🚀 Professional:</strong> $1,000+ (Most Popular)</p>
-                <p><strong>🏛️ Institutional:</strong> $10,000+ (Premium)</p>
+              <div style="background: rgba(239, 68, 68, 0.1); padding: 20px; border-radius: 10px; margin: 40px 0; border-left: 4px solid #ef4444;">
+                <div style="color: #dc2626; font-weight: bold; margin-bottom: 10px;">⚠️ Investment Risk Disclosure</div>
+                <div style="color: #64748b; font-size: 0.9em;">
+                  All investments carry risk. AI trading involves substantial risk of loss. Only invest capital you can afford to lose. 
+                  Past performance does not guarantee future results.
+                </div>
               </div>
 
-              <p style="margin-top: 40px; opacity: 0.7;">
-                ⚠️ High-risk investment. Only invest what you can afford to lose.
-              </p>
+              <div style="margin-top: 40px;">
+                <p style="color: #64748b; font-size: 1.1em;">
+                  <strong>💡 Try Enhanced Design:</strong> 
+                  <a href="?design=enhanced" style="color: #3b82f6; text-decoration: none; font-weight: 600;">
+                    View Premium Interface
+                  </a>
+                </p>
+              </div>
             </div>
           `);
+        }
+      });
+    });
+
+    // Enhanced design preview route
+    this.app.get('/enhanced', (req, res) => {
+      const indexPath = path.join(__dirname, 'enhanced-index.html');
+      console.log(`📄 Serving ENHANCED professional website from: ${indexPath}`);
+      res.sendFile(indexPath, (err) => {
+        if (err) {
+          console.error('❌ Error serving enhanced-index.html:', err);
+          res.redirect('/?design=enhanced');
+        }
+      });
+    });
+
+    // Design API for switching between versions
+    this.app.get('/api/design/:version', (req, res) => {
+      const version = req.params.version;
+      const validVersions = ['standard', 'enhanced'];
+      
+      if (!validVersions.includes(version)) {
+        return res.status(400).json({
+          success: false,
+          error: 'Invalid design version',
+          validVersions: validVersions
+        });
+      }
+
+      res.json({
+        success: true,
+        message: `Design version switched to ${version}`,
+        currentVersion: version,
+        redirectUrl: version === 'enhanced' ? '/enhanced' : '/',
+        features: {
+          standard: ['Clean professional design', 'Basic functionality', 'Standard charts'],
+          enhanced: ['Premium analyst-inspired design', 'Advanced data visualizations', 'AI-focused interface', 'Interactive charts', 'Modern typography']
         }
       });
     });
